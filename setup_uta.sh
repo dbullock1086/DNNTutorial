@@ -7,8 +7,6 @@ export UserWork=/home/dbullock/DNNTutorial
 # establish the environment
 export MLDir=$DepWork/.virtualenvs/keras
 export HPYROOTDIR=$DepWork/hPyROOT
-export PATH=$MLDir/bin:$HPYROOTDIR/bin:$PATH
-export PYTHONPATH=$HPYROOTDIR/python:$PYTHONPATH
 
 export SampleDir=$DepWork/samples
 #export SampleDir=/scratch/data-backup/afarbin/crogan/h5/
@@ -20,3 +18,6 @@ source /setups/setup_virtualenv.sh
 source /setups/setup_cuda-8.0.sh
 source /setups/setup_root.sh
 source activate keras
+
+export PATH=$HPYROOTDIR/bin:$PATH
+export PYTHONPATH=$HPYROOTDIR/python:$PYTHONPATH
