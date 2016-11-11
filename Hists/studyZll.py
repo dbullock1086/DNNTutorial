@@ -22,7 +22,7 @@ driver.Output (os.getenv('HistDir') + '/studyZll.root')
 estore = EventStore ('estore')
 
 # prediction term
-predict = VarDef ('predict_0', 'prediction')
+predict = VarDef ('prediction', 'predict_0')
 estore.AddVar (predict)
 
 # four vectors:
@@ -45,7 +45,7 @@ driver.Alg (Mll)
 # fill a histogram with values
 h = HistFill ('h_feature',
               'Mll', 20, 0, 200,
-              'predicttion', 20, 0, 1)
+              'prediction', 20, 0, 1)
 driver.Alg (h)
 
 # run the job
