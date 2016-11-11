@@ -14,7 +14,7 @@ export SampleDir=$DepWork/samples/dnn-tutorial
 #export SampleDir=/afs/cern.ch/work/a/afarbin/public/RestFrames-llbbMET
 
 export TrainDir=$UserWork/DLKit/TrainedModel
-export HistDir=$UserWork/DLKit/Hists
+export HistDir=$UserWork/Hists
 
 source activate testenv
 cd $MLDir
