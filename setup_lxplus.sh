@@ -13,7 +13,7 @@ export PYTHONPATH=$HPYROOTDIR/python:$PYTHONPATH
 export SampleDir=$DepWork/samples/dnn-tutorial
 #export SampleDir=/afs/cern.ch/work/a/afarbin/public/RestFrames-llbbMET
 
-export TrainDir=$UserWork/DLKit/TrainedModel
+export TrainDir=$UserWork/DLKit/TrainedModels
 export HistDir=$UserWork/Hists
 
 source activate testenv
