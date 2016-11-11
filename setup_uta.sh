@@ -7,6 +7,7 @@ export UserWork=/home/dbullock/DNNTutorial
 # establish the environment
 export MLDir=$DepWork/.virtualenvs/keras
 export HPYROOTDIR=$DepWork/hPyROOT
+export PATH=$MLDir/bin:$PATH
 
 export SampleDir=$DepWork/samples
 #export SampleDir=/scratch/data-backup/afarbin/crogan/h5/
