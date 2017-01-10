@@ -5,16 +5,15 @@ export DepWork=/home/dbullock
 export UserWork=/home/dbullock/DNNTutorial
 
 # establish the environment
-export MLDir=$DepWork/.virtualenvs/keras
+export MLDir=$HOME/.virtualenvs/keras
 export HPYROOTDIR=$DepWork/hPyROOT
 export PATH=$MLDir/bin:$PATH
 
-export SampleDir=$DepWork/samples
-#export SampleDir=/scratch/data-backup/afarbin/crogan/h5
-#export SampleDir=/scratch/pjackson/SignalBGCompressedSkim
+export SampleDirZll=$DepWork/samples
+export SampleDirSUSY=/scratch/data-backup/afarbin/crogan/h5
 
 export TrainDir=$Tutorial/DLKit/TrainedModel
-export HistDir=$Tutorial/Hists
+export HistDir=$Tutorial/hists
 
 source /setups/setup_virtualenv.sh
 source /setups/setup_cuda-8.0.sh
