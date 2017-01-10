@@ -10,8 +10,8 @@ export HPYROOTDIR=$DepWork/hPyROOT
 export PATH=$MLDir/bin:$HPYROOTDIR/bin:$PATH
 export PYTHONPATH=$HPYROOTDIR/python:$PYTHONPATH
 
-export SampleDir=$DepWork/samples/dnn-tutorial
-#export SampleDir=/afs/cern.ch/work/a/afarbin/public/RestFrames-llbbMET
+export SampleDirZll=$DepWork/samples/dnn-tutorial
+export SampleDirSUSY=/afs/cern.ch/work/a/afarbin/public/RestFrames-llbbMET
 
 export TrainDir=$UserWork/DLKit/TrainedModels
 export HistDir=$UserWork/Hists
