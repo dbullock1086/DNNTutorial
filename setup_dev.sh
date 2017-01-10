@@ -4,8 +4,9 @@ setupCode hPyROOT
 setupCode RestFrames
 
 setupCode WorkDir $HOME/Work/DNNTutorial
-setupCode HistDir $WorkDir/Hists
+setupCode HistDir $WorkDir/hists
 
-setupCode SampleDir $HOME/Samples/dnn-tutorial
+export SampleDirZll=$HOME/Samples/dnn-tutorial
+export SampleDirSUSY=$HOME/Samples/dnn-tutorial
 
-export ResultDir=$HOME/Samples/trained
+export TrainDir=$HOME/Samples/trained
