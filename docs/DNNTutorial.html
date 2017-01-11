@@ -12154,7 +12154,20 @@ sh Miniconda3-latest-Linux-x86_64.sh
 
 </div>
 </div>
-</div>workarea/miniconda3
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span>workarea/miniconda3
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -12460,7 +12473,7 @@ c. Normalize the data<br></li>
 <p><code>EventClassificationDNN/Analysis.py</code>: This contains the analysis that is performed at the end to see how well we did.</p>
 <p><code>EventClassificationDNN/CSVWriter.py</code>: This dumps the results in a format readable to most software.</p>
 <p>Our DNN architecture is defined by the types, number, and dimension of layers. Hyper-parameter scanning refers to the process of searching for an optimal architecture that performs well for a task and can be trained and applied within reasonable time. Beyond the parameters that define the DNN architecture, other configuration parameters allow setting and testing activation and cost functions, optimization (e.g. minimization) techniques, and rate other training parameters.</p>
-<p>In DLKit, these parameters are set in a configuration file, which defines a single python key/value dictionary called <code>Config</code>. DLKit puts the contents of this dictionary in the global scope with the keys as the variable names. As an example, see line 52 of <code>ZllConfig.py</code>:</p>
+<p>In DLKit, these parameters are set in a configuration file, which defines a single python key/value dictionary called <code>Config</code>. DLKit puts the contents of this dictionary in the global scope with the keys as the variable names. As an example, see line 40 of <code>ZllConfig.py</code>:</p>
 
 </div>
 </div>
@@ -12477,6 +12490,7 @@ c. Normalize the data<br></li>
           <span class="s1">&#39;Decay&#39;</span><span class="p">:</span>           <span class="mf">0.</span><span class="p">,</span>
           <span class="s1">&#39;Momentum&#39;</span><span class="p">:</span>        <span class="mf">0.</span><span class="p">,</span>
           <span class="s1">&#39;Nesterov&#39;</span><span class="p">:</span>        <span class="mf">0.</span><span class="p">,</span>
+          <span class="s1">&#39;arrType&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
           <span class="s1">&#39;WeightInitialization&#39;</span><span class="p">:</span><span class="s2">&quot;&#39;normal&#39;&quot;</span><span class="p">}</span>
 </pre></div>
 
@@ -12490,7 +12504,7 @@ c. Normalize the data<br></li>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Note that the max events is per data sample and not over the whole training set. It would be cumbersome to generate a new configuration file for every network we would like to try. Instead, <code>ZllConfig.py</code> uses a second dictionary to specify parameters that you would like to scan, and the <code>DLTools.Permutator</code> class generates all possible configurations of the parameter. For example, on line 61:</p>
+<p>Note that the max events is per data sample and not over the whole training set. It would be cumbersome to generate a new configuration file for every network we would like to try. Instead, <code>ZllConfig.py</code> uses a second dictionary to specify parameters that you would like to scan, and the <code>DLTools.Permutator</code> class generates all possible configurations of the parameter. For example, on line 50:</p>
 
 </div>
 </div>
@@ -12637,16 +12651,19 @@ git clone https://github.com/dbullockphd/hPyROOT
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>root2hdf5 studyZll.C
-mv studyZll.root $SampleDirZll/Zll.h5</p>
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span>root2hdf5 studyZll.C
+mv studyZll.root <span class="nv">$SampleDirZll</span>/Zll.h5
+</pre></div>
 
 </div>
 </div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -13423,9 +13440,9 @@ $$
 </ul>
 <p>In the configuration file, these values are kept in the following lines:</p>
 <ul>
-<li>Epoch on line 53</li>
-<li>Width on line 61</li>
-<li>Depth on line 62</li>
+<li>Epoch on line 41</li>
+<li>Width on line 50</li>
+<li>Depth on line 51</li>
 </ul>
 <p>However, leave them as they are on your first try. We can use the <code>-s</code> flag to access the pre-defined parameters. There are other important parts of the configuration file to consider, but we will leave them to the <a href="#SUSY-bbll+MET-Topology">SUSY model</a>.</p>
 <p><strong>Note:</strong> You could set the epoch as high as you want. The general rule is that a higher number of epochs <em>does</em> mean better classification results, but at the expense of increasing the amount of time spent on training. Also in general, the relationship between classification performance and the number of epochs is uncertain after the random learning converges; you could find that you are spending a lot of time for very little extra gain.</p>
@@ -13951,7 +13968,7 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can create these plots yourself again using hPyROOT. The output file is in CSV format because of its compatability. hPyROOT includes an executable that converts the file to ROOT or HDF5 format, which are better protected from tampering. Execute the following:</p>
+<p>You can create these plots yourself again using hPyROOT. The output file is in CSV format because of its compatability with many software environments. hPyROOT includes an executable that converts the file to ROOT or HDF5 format, which are better protected from tampering. Execute the following:</p>
 
 </div>
 </div>
@@ -14459,15 +14476,6 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Combined-Cuts">Combined Cuts<a class="anchor-link" href="#Combined-Cuts">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Suggested-tinkering-for-Zll-topology">Suggested tinkering for Zll topology<a class="anchor-link" href="#Suggested-tinkering-for-Zll-topology">&#182;</a></h2>
 </div>
 </div>
@@ -14477,7 +14485,8 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This concludes the prepared part of the $Z \rightarrow \ell\ell$ topological study. You are welcome to continue playing with the configuration file. We suggest changing the width, depth, and epoch, and see how it affects your results. You can force the training to use a new width/depth/epoch by editing the existing configuration, or you can set a list of values and drop the <code>-s</code> option from the command line to let random chance decide the hyperparameter set. If you are working on lxplus, remember that each test you run could take a long time. Even on the UTA-HEP cluster, you may want to have something else to do while it runs and then analyze the results later.</p>
+<p>This concludes the prepared part of the $Z \rightarrow \ell\ell$ topological study. You are welcome to continue tinkering with the configuration file. We suggest changing the width, depth, and epoch, and see how it affects your results. You can force the training to use a new width/depth/epoch by editing the existing configuration, or you can set a list of values and drop the <code>-s</code> option from the command line to let random chance decide the hyperparameter set. If you are working on lxplus, remember that each test you run could take a long time. Even on the UTA-HEP cluster, you may want to have something else to do while it runs and then analyze the results later.</p>
+<p>Another idea you could try is to study whether the DNN has found a truly deterministic classification. Since both the production of the samples and the learning process itself are inherently probabilistic, you are not going to get <em>exactly</em> the same results. You can train over several trials and compare results. You can also try the suggested option of generating the topology yourself and then compare your results with the the new samples file. The model should also be able to isolate events from a combined sample of data (with both -- or unknown -- classifications).</p>
 
 </div>
 </div>
@@ -14509,17 +14518,17 @@ $$
 <p>The $Z \rightarrow \ell\ell$ example shows how to separate signal from background. Your analysis groups may have other perferred ways to eliminate background events, so maybe you would rather train for optimizing your signal sensitivity. Rather than making cuts across an entire plane of signal models, it could be beneficial to isolate regions of similar decay topologies.</p>
 <p>This second configuration is set up to study how well we can distinguish different SUSY decay topologies leading to the $bb\ell\ell + E_\mathrm{T}^{miss}$ final state. We train on samples of decays of SUSY-like particles ($P$). The $P$ particle can decay via a daughter particle ($C$) in 2 ways:</p>
 <ul>
-<li>"A": $P \rightarrow Cb \rightarrow \ell\chi$</li>
-<li>"B": $P \rightarrow C\ell \rightarrow b\chi$</li>
+<li>"A": $P \rightarrow Cb$ and $C \rightarrow \ell\chi$</li>
+<li>"B": $P \rightarrow C\ell$ and $C \rightarrow b\chi$</li>
 </ul>
-<p>Here. $\chi$ is a weakly interacting particle that escapes detection. For any given masses of $P$, $C$, and $\chi$, there are 4 possible types of event topologies depending how each (RPC SUSY) of the $P$ particles decays:</p>
+<p>Here. $\chi$ is a weakly interacting particle that escapes detection. For any given masses of $P$, $C$, and $\chi$, there are 4 possible types of event topologies depending on how each (RPC SUSY) of the $P$ particles decays:</p>
 <ul>
 <li>AA</li>
 <li>AB</li>
 <li>BA</li>
 <li>BB</li>
 </ul>
-<p>Our task is to distinguish between these scenarios using different inputs. For this study, we fix the mass of the $P$ particle at 1 TeV, the mass of the $\chi$ particle at 100 GeV, and scan the $C$ particle mass between the $P$ and $\chi$ masses.</p>
+<p>Our task is to distinguish between these scenarios using different inputs. For this study, we fix the mass of the $P$ particle at 1 TeV, the mass of the $\chi$ particle at 100 GeV, and scan the $C$ particle mass between the $P$ and $\chi$ masses ([150, 950]).</p>
 <p>The datasets from each sample file (<code>$SampleDirSUSY</code>) contain the SUSY particle masses that were used to generate the models:</p>
 <ul>
 <li>mP</li>
@@ -14629,7 +14638,7 @@ $$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We have quite a few observables to work with, so do we need all of them? Which ones do we need? The decay chain can be completely described if the four-vectors of all particles are known. This would be an ideal circumstance where <em>all</em> information is available for analysis. We have four-vectors for both $b$-jets (B1 and B2) and both leptons (L1 and L2), but we have some missing energy due to the presence of invisible particles. Even if we include $E_\mathrm{T}^{miss}$ as a missing object, it is a two-vector that lacks both longitudinal and mass information. Since there are <em>two</em> invisible <em>massive</em> particles, the scattering event is highly under-constrained; we have an incomplete description of the information.</p>
 <p>One way to bridge this gap is to impose a signal reconstruction on the event analysis. If we can identify the masses of the SUSY particles (mP, mC, and mX), then we might gain some insight into the recoil energies of the visible particles. This would be a good improvement, but it would still ignore the longitudinal component of the missing energy. This is why the Recursive Jigsaw reconstruction adds so many observables to the study: it attempts to approximate <em>all</em> of the information in the event by imposing a full decay chain of four-vectors.</p>
-<p>The groups to analyze are specified in the configuration file. Starting at line <code>111</code>, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignore during training, but will still be carried through to the <code>Result.csv</code> file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:</p>
+<p>The groups to analyze are specified in the configuration file. Starting at line <code>111</code>, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignored during training, but will still be carried through to the <code>Result.csv</code> file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:</p>
 <ul>
 <li>all observables</li>
 <li>raw detector-level observables</li>
@@ -14656,7 +14665,93 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>[Currently updating this part]</p>
+<p>The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs. Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.</p>
+<p>Parameters:</p>
+<ul>
+<li>width = ???</li>
+<li>depth = ???</li>
+<li>epoch = ???</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>variable set...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">EventClassificationDNN</span><span class="o">.</span><span class="n">Experiment</span> <span class="o">--</span><span class="n">config</span> <span class="n">EventClassificationDNN</span><span class="o">/</span><span class="n">SUSYConfig</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span> <span class="mi">0</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ROC figures...</p>
+<p>variable set...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">EventClassificationDNN</span><span class="o">.</span><span class="n">Experiment</span> <span class="o">--</span><span class="n">config</span> <span class="n">EventClassificationDNN</span><span class="o">/</span><span class="n">SUSYConfig</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span> <span class="mi">1</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>ROC figures...</p>
+<p>etc...</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Suggested-tinkering-for-SUSY-topology">Suggested tinkering for SUSY topology<a class="anchor-link" href="#Suggested-tinkering-for-SUSY-topology">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The goal of this tutorial was to demonstrate that the variable set used in the study is an area of interest. In the $Z \rightarrow \ell\ell$ topology, we were only looking at one set, so the optimzation of width and depth was relatively simple to find. Since the SUSY topology has a few sets of interesting variables, and each set has a different number of variables, that choice is not always optimal. Therefore, do not read too much into the differing results because they may not be fair comparisons.</p>
+<p>Furthermore, a set of variables were given as options, but we picked them based on hunches. There may be another set of variables that outperforms the tutorial setup. Since this training does take quite a long time (even on GPU), this extensive study is not examined in this tutorial.</p>
+
 </div>
 </div>
 </div>
@@ -14676,6 +14771,24 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Testing-your-own-samples">Testing your own samples<a class="anchor-link" href="#Testing-your-own-samples">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you have your own dataset that you want to use for your own classification study, there a few things that you have to do to prepare your data.</p>
+<ol>
+<li><p>The data has to be suited for a classification study. This means that there is some way that you can clearly separate one type from another. In both examples in this tutorial, the classifications are expected to be given as completely separate datasets. This would be like having one TTree for truth jets and another TTree for reconstructed jets. Both TTrees can be contained in the same ROOT file, but they have to be separated into classification datasets. It is not enough to represent the classification as different branches in one TTree.</p>
+</li>
+<li><p>The data has to be in the HDF5 format. There is a tool provided by <code>rootpy</code> called <code>root2hdf5</code> that can convert ROOT files automatically. This tool also needs the <code>root_numpy</code> package because it converts branches into components of a numpy array. This tool is able to convert vectors from ROOT files into a "3D" tensor, but for best results, we recommend keeping the files flat ("2D" matrix, with event-branch as row-column). If you are converting a vector with an uncertain number of components (e.g. j0_pT, j1_pT, ..., jN_pT; where N is not a constant per event), then you can set the empty branches in the flat file to "NaN".</p>
+</li>
+<li><p>You need a sizable amount of data. In the examples, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your <em>sampling</em>. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.</p>
+</li>
+</ol>
+
 </div>
 </div>
 </div>
@@ -14722,6 +14835,12 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Deep-Learning is an branch of the machine-learning process that uses algorithms to model the high-level abstractions in data. Machine learning is a form of pattern recognition that allows a computer to make successive trials and generate a prediction without a specific prescription for solving the problem. The computer is minimally given access to data and time/memory resources. There are three basic ways that the learning can be facilitated:</p>
+<ul>
+<li>Supervised - the computer is given input <em>and</em> output by human examination, and it just has to find the map between them</li>
+<li>Reinforced - the learning process is competitive, for example a chess game between a human and a computer, or one computer against another</li>
+<li>Unsupervised - the computer only has input to examine and tries to learn the structure of it on its own</li>
+</ul>
 <p>Neural Networks (NN) are usually trained through minimization. Let's consider supervised learning. Our training sample will consist of</p>
 <ul>
 <li><code>N</code> input variables for every training example, which we will store in a tensor <code>X</code>,</li>
@@ -14729,6 +14848,7 @@ $$
 </ul>
 <p>For our classification task, we will use one-hot convention for <code>Y</code>. For example in a simple signal versus 2 backgrounds classification task, the value of <code>Y</code> for each example is usually <code>[1,0,0]</code> for signal and <code>[0,1,0]</code> and <code>[0,0,1]</code> for each of the backgrounds.</p>
 <p>The NN takes the input and predicts an output: <code>N(X)=Y'</code>. During training, we alter the internal weights and biases <code>W</code> and <code>b</code> of the NN in a way to make the predicted <code>Y'</code> as close as possible to <code>Y</code>, using a cost (or loss) function <code>C(Y,Y')</code> as the metric of how well we are doing. For example, <code>C</code> could be just the Euclidean distance. Training then is just minimizing <code>C</code> wrt <code>W</code> and <code>C</code> on the training dataset. Typically this is done with Stochastic Gradient Descent, which computes the gradient of <code>C</code> wrt <code>W</code> and <code>b</code> for some subset (batch_size) of the training sample, takes a step along the gradient, then does this for the next subset until the end of the training sample. Every full passthrough of the training sample is referred to as an Epoch.</p>
+<p>In Deep-Learning, the learning process has access to algorithms that allow it build its own features from input data. It can build an internal model of a derived set</p>
 
 </div>
 </div>
@@ -15268,7 +15388,7 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The following subsections describe how the parameters of the DNN were optimized. The numbers are specific to the local cluster at the University of Texas at Arlington, but the procedure should be applicable to other systems. The model selected for study was $Z \rightarrow \ell\ell$.</p>
+<p>The following subsections describe how the parameters of the DNN were optimized. The numbers are specific to the local cluster at the University of Texas at Arlington, but the procedure should be applicable to other systems. The model selected for study was $Z \rightarrow \ell\ell$, and another optimization study (not shown) was performed for the $bb\ell\ell + E_\mathrm{T}^{miss}$ topology.</p>
 
 </div>
 </div>
@@ -15347,6 +15467,7 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From this plot, it was determined that a large number of hidden layers is undesirable. The training outcome gets confused (approaching 50%) and the timescale grows. Therefore, it was decided to fix the depth to a value of 1 and continue optimizing by other means.</p>
+<p>This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect, or the population of events may be identical. It is expected that the minimum information needed to classify the event comes from <em>features</em> of the event -- e.g. combinations of observables.</p>
 
 </div>
 </div>
@@ -15447,7 +15568,7 @@ $$
 <ul>
 <li>width = 1585</li>
 <li>depth = 1</li>
-<li>epoch ... as much as we can be patient for</li>
+<li>epoch = ... as high as patience will allow</li>
 </ul>
 
 </div>

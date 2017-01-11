@@ -149,7 +149,12 @@ sh Miniconda3-latest-Linux-x86_64.sh
 ```
 
 Press `enter`, approve license (`yes`), change the installation path of Miniconda3 to:
+
+
+```bash
 workarea/miniconda3
+```
+
 **Note:** The default is to install it to your `/afs/cern.ch/user/` space, which is not what we're suggesting here.
 
 Do not prepend the `PATH` to your login shell. Instead, put it in your `setup.sh` file.
@@ -282,7 +287,7 @@ There are several other scripts that are called by `Experiment.py`:
 
 Our DNN architecture is defined by the types, number, and dimension of layers. Hyper-parameter scanning refers to the process of searching for an optimal architecture that performs well for a task and can be trained and applied within reasonable time. Beyond the parameters that define the DNN architecture, other configuration parameters allow setting and testing activation and cost functions, optimization (e.g. minimization) techniques, and rate other training parameters.
 
-In DLKit, these parameters are set in a configuration file, which defines a single python key/value dictionary called `Config`. DLKit puts the contents of this dictionary in the global scope with the keys as the variable names. As an example, see line 52 of `ZllConfig.py`: 
+In DLKit, these parameters are set in a configuration file, which defines a single python key/value dictionary called `Config`. DLKit puts the contents of this dictionary in the global scope with the keys as the variable names. As an example, see line 40 of `ZllConfig.py`: 
 
 
 ```python
@@ -293,10 +298,11 @@ Config = {'MaxEvents':    50000,
           'Decay':           0.,
           'Momentum':        0.,
           'Nesterov':        0.,
+          'arrType': np.float32,
           'WeightInitialization':"'normal'"}
 ```
 
-Note that the max events is per data sample and not over the whole training set. It would be cumbersome to generate a new configuration file for every network we would like to try. Instead, `ZllConfig.py` uses a second dictionary to specify parameters that you would like to scan, and the `DLTools.Permutator` class generates all possible configurations of the parameter. For example, on line 61:
+Note that the max events is per data sample and not over the whole training set. It would be cumbersome to generate a new configuration file for every network we would like to try. Instead, `ZllConfig.py` uses a second dictionary to specify parameters that you would like to scan, and the `DLTools.Permutator` class generates all possible configurations of the parameter. For example, on line 50:
 
 
 ```python
@@ -343,8 +349,11 @@ You can generate these samples on your own if you want. This will need ~ 110 MB 
 
 This will output a dataset in ROOT format, and was converted to HDF5 using `root2hdf5` (which comes with the `rootpy` package). While this conversion utility can handle some complex ROOT data types, we used flat `TTrees` with simple types which produces very predictable HDF5 format.
 
+
+```bash
 root2hdf5 studyZll.C
 mv studyZll.root $SampleDirZll/Zll.h5
+```
 
 ## Data Given to DNN
 
@@ -645,9 +654,9 @@ The task is nearly ready to run already. The particular configuration file we wa
 - On the UTA-HEP cluster: Width = 1585, Depth = 1, Epoch = 1000
 
 In the configuration file, these values are kept in the following lines:
-- Epoch on line 53
-- Width on line 61
-- Depth on line 62
+- Epoch on line 41
+- Width on line 50
+- Depth on line 51
 
 However, leave them as they are on your first try. We can use the `-s` flag to access the pre-defined parameters. There are other important parts of the configuration file to consider, but we will leave them to the [SUSY model](#SUSY-bbll+MET-Topology).
 
@@ -806,7 +815,7 @@ This plot finally shows something that you can use to pick a stable contour. At 
 
 ### (optional) How these feature plots were made
 
-You can create these plots yourself again using hPyROOT. The output file is in CSV format because of its compatability. hPyROOT includes an executable that converts the file to ROOT or HDF5 format, which are better protected from tampering. Execute the following:
+You can create these plots yourself again using hPyROOT. The output file is in CSV format because of its compatability with many software environments. hPyROOT includes an executable that converts the file to ROOT or HDF5 format, which are better protected from tampering. Execute the following:
 
 
 ```bash
@@ -1014,11 +1023,11 @@ Close the file when you are done.
 f.Close()
 ```
 
-## Combined Cuts
-
 ## Suggested tinkering for Zll topology
 
-This concludes the prepared part of the $Z \rightarrow \ell\ell$ topological study. You are welcome to continue playing with the configuration file. We suggest changing the width, depth, and epoch, and see how it affects your results. You can force the training to use a new width/depth/epoch by editing the existing configuration, or you can set a list of values and drop the `-s` option from the command line to let random chance decide the hyperparameter set. If you are working on lxplus, remember that each test you run could take a long time. Even on the UTA-HEP cluster, you may want to have something else to do while it runs and then analyze the results later.
+This concludes the prepared part of the $Z \rightarrow \ell\ell$ topological study. You are welcome to continue tinkering with the configuration file. We suggest changing the width, depth, and epoch, and see how it affects your results. You can force the training to use a new width/depth/epoch by editing the existing configuration, or you can set a list of values and drop the `-s` option from the command line to let random chance decide the hyperparameter set. If you are working on lxplus, remember that each test you run could take a long time. Even on the UTA-HEP cluster, you may want to have something else to do while it runs and then analyze the results later.
+
+Another idea you could try is to study whether the DNN has found a truly deterministic classification. Since both the production of the samples and the learning process itself are inherently probabilistic, you are not going to get *exactly* the same results. You can train over several trials and compare results. You can also try the suggested option of generating the topology yourself and then compare your results with the the new samples file. The model should also be able to isolate events from a combined sample of data (with both -- or unknown -- classifications).
 
 ---
 
@@ -1027,16 +1036,16 @@ This concludes the prepared part of the $Z \rightarrow \ell\ell$ topological stu
 The $Z \rightarrow \ell\ell$ example shows how to separate signal from background. Your analysis groups may have other perferred ways to eliminate background events, so maybe you would rather train for optimizing your signal sensitivity. Rather than making cuts across an entire plane of signal models, it could be beneficial to isolate regions of similar decay topologies.
 
 This second configuration is set up to study how well we can distinguish different SUSY decay topologies leading to the $bb\ell\ell + E_\mathrm{T}^{miss}$ final state. We train on samples of decays of SUSY-like particles ($P$). The $P$ particle can decay via a daughter particle ($C$) in 2 ways:
-- "A": $P \rightarrow Cb \rightarrow \ell\chi$
-- "B": $P \rightarrow C\ell \rightarrow b\chi$
+- "A": $P \rightarrow Cb$ and $C \rightarrow \ell\chi$
+- "B": $P \rightarrow C\ell$ and $C \rightarrow b\chi$
 
-Here. $\chi$ is a weakly interacting particle that escapes detection. For any given masses of $P$, $C$, and $\chi$, there are 4 possible types of event topologies depending how each (RPC SUSY) of the $P$ particles decays:
+Here. $\chi$ is a weakly interacting particle that escapes detection. For any given masses of $P$, $C$, and $\chi$, there are 4 possible types of event topologies depending on how each (RPC SUSY) of the $P$ particles decays:
 - AA
 - AB
 - BA
 - BB
 
-Our task is to distinguish between these scenarios using different inputs. For this study, we fix the mass of the $P$ particle at 1 TeV, the mass of the $\chi$ particle at 100 GeV, and scan the $C$ particle mass between the $P$ and $\chi$ masses.
+Our task is to distinguish between these scenarios using different inputs. For this study, we fix the mass of the $P$ particle at 1 TeV, the mass of the $\chi$ particle at 100 GeV, and scan the $C$ particle mass between the $P$ and $\chi$ masses ([150, 950]).
 
 The datasets from each sample file (`$SampleDirSUSY`) contain the SUSY particle masses that were used to generate the models:
 - mP
@@ -1100,7 +1109,7 @@ We have quite a few observables to work with, so do we need all of them? Which o
 
 One way to bridge this gap is to impose a signal reconstruction on the event analysis. If we can identify the masses of the SUSY particles (mP, mC, and mX), then we might gain some insight into the recoil energies of the visible particles. This would be a good improvement, but it would still ignore the longitudinal component of the missing energy. This is why the Recursive Jigsaw reconstruction adds so many observables to the study: it attempts to approximate *all* of the information in the event by imposing a full decay chain of four-vectors.
 
-The groups to analyze are specified in the configuration file. Starting at line `111`, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignore during training, but will still be carried through to the `Result.csv` file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:
+The groups to analyze are specified in the configuration file. Starting at line `111`, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignored during training, but will still be carried through to the `Result.csv` file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:
 - all observables
 - raw detector-level observables
 - raw detector-level observables with the masses of the generating signal model
@@ -1111,11 +1120,52 @@ These field selections can be controlled by specifying an index number to the `-
 
 ## Training and Analysis
 
+[Currently updating this part]
+
+The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs. Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.
+
+Parameters:
+- width = ???
+- depth = ???
+- epoch = ???
+
+variable set...
+
+
+```python
+python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSYConfig.py -v 0
+```
+
+ROC figures...
+
+variable set...
+
+
+```python
+python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSYConfig.py -v 1
+```
+
+ROC figures...
+
+etc...
+
 ## Suggested tinkering for SUSY topology
+
+The goal of this tutorial was to demonstrate that the variable set used in the study is an area of interest. In the $Z \rightarrow \ell\ell$ topology, we were only looking at one set, so the optimzation of width and depth was relatively simple to find. Since the SUSY topology has a few sets of interesting variables, and each set has a different number of variables, that choice is not always optimal. Therefore, do not read too much into the differing results because they may not be fair comparisons.
+
+Furthermore, a set of variables were given as options, but we picked them based on hunches. There may be another set of variables that outperforms the tutorial setup. Since this training does take quite a long time (even on GPU), this extensive study is not examined in this tutorial.
 
 ---
 
 # Testing your own samples
+
+If you have your own dataset that you want to use for your own classification study, there a few things that you have to do to prepare your data.
+
+1. The data has to be suited for a classification study. This means that there is some way that you can clearly separate one type from another. In both examples in this tutorial, the classifications are expected to be given as completely separate datasets. This would be like having one TTree for truth jets and another TTree for reconstructed jets. Both TTrees can be contained in the same ROOT file, but they have to be separated into classification datasets. It is not enough to represent the classification as different branches in one TTree.
+
+2. The data has to be in the HDF5 format. There is a tool provided by `rootpy` called `root2hdf5` that can convert ROOT files automatically. This tool also needs the `root_numpy` package because it converts branches into components of a numpy array. This tool is able to convert vectors from ROOT files into a "3D" tensor, but for best results, we recommend keeping the files flat ("2D" matrix, with event-branch as row-column). If you are converting a vector with an uncertain number of components (e.g. j0_pT, j1_pT, ..., jN_pT; where N is not a constant per event), then you can set the empty branches in the flat file to "NaN".
+
+3. You need a sizable amount of data. In the examples, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your *sampling*. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.
 
 ---
 
@@ -1125,6 +1175,11 @@ These field selections can be controlled by specifying an index number to the `-
 
 ## Deep-Learning
 
+Deep-Learning is an branch of the machine-learning process that uses algorithms to model the high-level abstractions in data. Machine learning is a form of pattern recognition that allows a computer to make successive trials and generate a prediction without a specific prescription for solving the problem. The computer is minimally given access to data and time/memory resources. There are three basic ways that the learning can be facilitated:
+- Supervised - the computer is given input *and* output by human examination, and it just has to find the map between them
+- Reinforced - the learning process is competitive, for example a chess game between a human and a computer, or one computer against another
+- Unsupervised - the computer only has input to examine and tries to learn the structure of it on its own
+
 Neural Networks (NN) are usually trained through minimization. Let's consider supervised learning. Our training sample will consist of
 - `N` input variables for every training example, which we will store in a tensor `X`,
 - and the `M` quantities we want the NN to learn to predict for every example, which we will store in the tensor `Y`.
@@ -1132,6 +1187,8 @@ Neural Networks (NN) are usually trained through minimization. Let's consider su
 For our classification task, we will use one-hot convention for `Y`. For example in a simple signal versus 2 backgrounds classification task, the value of `Y` for each example is usually `[1,0,0]` for signal and `[0,1,0]` and `[0,0,1]` for each of the backgrounds.
 
 The NN takes the input and predicts an output: `N(X)=Y'`. During training, we alter the internal weights and biases `W` and `b` of the NN in a way to make the predicted `Y'` as close as possible to `Y`, using a cost (or loss) function `C(Y,Y')` as the metric of how well we are doing. For example, `C` could be just the Euclidean distance. Training then is just minimizing `C` wrt `W` and `C` on the training dataset. Typically this is done with Stochastic Gradient Descent, which computes the gradient of `C` wrt `W` and `b` for some subset (batch_size) of the training sample, takes a step along the gradient, then does this for the next subset until the end of the training sample. Every full passthrough of the training sample is referred to as an Epoch.
+
+In Deep-Learning, the learning process has access to algorithms that allow it build its own features from input data. It can build an internal model of a derived set 
 
 ---
 
@@ -1327,7 +1384,7 @@ The shaded gray region under the diagonal is an area you hope to avoid. If the c
 
 ## Optimization
 
-The following subsections describe how the parameters of the DNN were optimized. The numbers are specific to the local cluster at the University of Texas at Arlington, but the procedure should be applicable to other systems. The model selected for study was $Z \rightarrow \ell\ell$.
+The following subsections describe how the parameters of the DNN were optimized. The numbers are specific to the local cluster at the University of Texas at Arlington, but the procedure should be applicable to other systems. The model selected for study was $Z \rightarrow \ell\ell$, and another optimization study (not shown) was performed for the $bb\ell\ell + E_\mathrm{T}^{miss}$ topology.
 
 ### Width
 
@@ -1344,6 +1401,8 @@ The "depth" of the DNN is the number of hidden layers. The plot below shows the 
 ![alt-text](depth.svg "Optimizing by varying the depth")
 
 From this plot, it was determined that a large number of hidden layers is undesirable. The training outcome gets confused (approaching 50%) and the timescale grows. Therefore, it was decided to fix the depth to a value of 1 and continue optimizing by other means.
+
+This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect, or the population of events may be identical. It is expected that the minimum information needed to classify the event comes from *features* of the event -- e.g. combinations of observables.
 
 ### Epoch
 
@@ -1366,4 +1425,4 @@ We can see that there is a minimum timecale, while the AUC remains near a stable
 To summarize, we found optimal parameters on the UTA-HEP cluster:
 - width = 1585
 - depth = 1
-- epoch ... as much as we can be patient for
+- epoch = ... as high as patience will allow
