@@ -12,9 +12,9 @@ from elalgs.DeltaPhi import * # calculate azimuthal angle
 from elalgs.HistFill import * # histogram filling
 
 # Now we initialize the Driver and set the I/O:
-driver = Driver ('overall')
+driver = Driver ('studyZll')
 driver.Input (os.getenv('TrainDir') + '/ZllModel_100k/Result.h5', 'tree')
-driver.Output (os.getenv('HistDir') + '/studyZll.root')
+driver.Output (os.getenv('HistDir'))
 
 # hPyROOT supports creating expressions from an arbitrary construction of labels
 # (columns) in the dataset. By defining a set of pyobjects and passing them to

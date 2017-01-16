@@ -12687,7 +12687,7 @@ mv studyZll.root <span class="nv">$SampleDirZll</span>/Zll.h5
 <li>$\eta$</li>
 <li>$E$</li>
 </ul>
-<p>This exercise will demonstrate the performance of the DNN using raw information. Because of the way the samples were generated, most of these values will be identical:</p>
+<p>This exercise will demonstrate the performance of the DNN using raw information. Because of the way the samples were generated, most of these values will be identical.</p>
 
 </div>
 </div>
@@ -12697,36 +12697,14 @@ mv studyZll.root <span class="nv">$SampleDirZll</span>/Zll.h5
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="compare-pT.svg" alt="figure:compare-pT.svg" title="Comparison of lepton pT in Data"> <img src="compare-eta.svg" alt="figure:compare-eta.svg" title="Comparison of lepton eta in Data"> <img src="compare-E.svg" alt="figure:compare-E.svg" title="Comparison of lepton E in Data"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The exception is in $\phi$:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<p>Transverse momentum:</p>
+<p><img src="compare-pT.svg" alt="figure:compare-pT.svg" title="Comparison of lepton pT in Data"></p>
+<p>Pseudo-rapidity:</p>
+<p><img src="compare-eta.svg" alt="figure:compare-eta.svg" title="Comparison of lepton eta in Data"></p>
+<p>Energy:
+<img src="compare-E.svg" alt="figure:compare-E.svg" title="Comparison of lepton E in Data"></p>
+<p>The exception is in the azimuthal angle:</p>
 <p><img src="compare-phi.svg" alt="figure:compare-phi.svg" title="Comparison of lepton phi in Data"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note:</strong> In a real sample, there would be some variability in the other distributions as well. This pseudo-data is only meant to show a DNN finding classification features from a familiar interaction.</p>
 
 </div>
@@ -12747,68 +12725,14 @@ mv studyZll.root <span class="nv">$SampleDirZll</span>/Zll.h5
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A human might find it exceedingly difficult to find the pattern in the above distribution for $\phi$. Instead, you might be inclined to look at the problem in 2D:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-Zll-phi.svg" alt="figure:compare-Zll-phi.svg" title="Comparison of lepton phi in Data"> <img src="compare-Rndm-phi.svg" alt="figure:compare-Rndm-phi.svg" title="Comparison of lepton phi in Data"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>These plots are comparing the $\phi$ of the positively-charged lepton with the negatively-charged lepton. In the $Z \rightarrow \ell\ell$ case (first plot), the leptons are mostly contralinear. In the randomized data, there is no clear pattern.</p>
 <p>Since this indicates a difference that appears to be related to whether the radiation is contralinear, another viable option is the azimuthal angle between the two leptons:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-DPhi.svg" alt="figure:compare-DPhi.svg" title="Comparison of lepton dphi in Data"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>For this example, $\Delta \phi$ might be good enough. However, in practice, this would not be utilizing all the available information. If we looked at the invariant mass, we would have more observables to work with:</p>
 $$
 M_{\ell\ell} = m_{\ell 1}^{2} + m_{\ell 2}^{2} + 2[E_\mathrm{T}(\ell 1)E_\mathrm{T}(\ell 2) - \vec{p}_\mathrm{T}(\ell 1) \cdot \vec{p}_\mathrm{T}(\ell 2)]
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison of invariant mass in Data"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+$$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison of invariant mass in Data"></p>
 <p>But this still ignores the longitudinal component of the events. The derived variables, although aesthetically fit for human readability, may be shedding some information. In a general example (not specifically tailored for a tutorial), the raw four-vectors could potentially contain enough extra information to make a better determination and improve selection criteria. Therefore, although derived variables <em>can</em> be constructed from the raw data, they are not explicitly given to the DNN to avoid biasing the results. After the DNN completes its training, we can compare the results to what we know works.</p>
 
 </div>
@@ -12943,9 +12867,9 @@ $$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">driver</span> <span class="o">=</span> <span class="n">Driver</span> <span class="p">(</span><span class="s1">&#39;overall&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">driver</span> <span class="o">=</span> <span class="n">Driver</span> <span class="p">(</span><span class="s1">&#39;raw&#39;</span> <span class="o">+</span> <span class="n">study</span><span class="p">)</span>
     <span class="n">driver</span><span class="o">.</span><span class="n">Input</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SampleDir&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/Zll.h5&#39;</span><span class="p">,</span> <span class="n">tname</span><span class="p">)</span>
-    <span class="n">driver</span><span class="o">.</span><span class="n">Output</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HistDir&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/study</span><span class="si">%s</span><span class="s1">.root&#39;</span> <span class="o">%</span> <span class="n">study</span><span class="p">)</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">Output</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HistDir&#39;</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -13230,7 +13154,7 @@ $$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">f</span> <span class="o">=</span> <span class="n">root_open</span><span class="p">(</span><span class="s1">&#39;study</span><span class="si">%s</span><span class="s1">.root&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">f</span> <span class="o">=</span> <span class="n">root_open</span><span class="p">(</span><span class="s1">&#39;raw</span><span class="si">%s</span><span class="s1">.root&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13577,90 +13501,27 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To get a sense of how well the DNN performed overall, we look at the <a href="#Receiver-Operating-Characteristic">ROC curves</a> to study the classifications.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>For one hundred epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="ROC-100.svg" alt="figure:ROC-100.svg" title="ROC curve after 100 epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The $Z \rightarrow \ell\ell$ classification is shown in red and the $Rndm \rightarrow \ell\ell$ classification is in orange. Notice that this means the terms "signal" and "background" are swapped depending on which curve you are looking at. Since they are inverted selections, you can safely look at only the red curve.</p>
 <p>This is still an early prediction from the DNN. There is some noticeable separation from the diagonal, but the background contamination is still quite high for a good signal acceptance. Near the bottom-left corner, the curve even dips below the diagonal. This would be a major concern if the signal events were very rare compared to the background: at <em>low</em> background contamination, the prediction is actually favoring a selection of <em>background</em> events. We should try more epochs.</p>
 <p>For one thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="ROC-1k.svg" alt="figure:ROC-1k.svg" title="ROC curve after 1k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>It may be difficult to notice, but this <em>is</em> a new figure (even with the same AUC values). The separation from the diagonal is just a <em>little</em> better. The DNN has not learned much even with 900 more epochs. But be patient...</p>
 <p>For ten thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="ROC-10k.svg" alt="figure:ROC-10k.svg" title="ROC curve after 10k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now, not only is the separaton even better, but the curves also do not dip below the diagonal. The red curve still favors a selection that has a large background acceptance. This condition is manifested as the rightward "slant" in the curve.</p>
 <p>For one hundred thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="ROC-100k.svg" alt="figure:ROC-100k.svg" title="ROC curve after 100k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The curve appears to be more symmetrical (not "slanted" as before). If you were interested in orthogonal cuts between signal and background, you could use this curve to set your selections. However, our purpose in training a DNN is to identify features, so we also look at its predictions.</p>
 
 </div>
@@ -13681,171 +13542,45 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>Result.csv</code> is the real file of interest. It can be used to study the features that the DNN has identified. It's not always easy to identify exactly what relationship was found between the observables in raw data since what it found was a piecewise conditional dataset. This is why the $Z \rightarrow \ell\ell$ example was chosen first, because it's not a big mystery about what the DNN might find; we already know invariant mass and $\Delta\phi$ are going to do quite well. Our conditional selections are <em>probabilistic</em> based on the value of observables in each event. In other words, we can think of the classification features as a "tag" with an associated certainty.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>First, we will examine what it learns from $\Delta\phi$. For one hundred epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-100-DPhi.svg" alt="figure:compare-100-DPhi.svg" title="DPhi result after 100 epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note:</strong> Reading this plot can be tricky when you first see it. The "red shift" does <strong>not</strong> mean that the DNN has identified these <em>values</em> (horizontal axis) to be more signal-like. Instead, the prediction strength will be visible on the <em>vertical</em> axis, with bins near the top indicating strong positive prediction and bins near the bottom indicating strong negative prediction. The colors are there just to indicate the number of events that are predicted to occupy that bin. In an idealized classification problem with a perfectly-suited discriminant (horizontal axis), the plot would consist of two red lines: 0% on the left and 100% on the right. If the problem is less discrete, then the green/blue bins indicate a non-zero chance.</p>
 <p>The DNN quickly finds that events near $\Delta\phi = \pi$ are predominantly signal events. However, it is not very confident of what percentage of events belong in either classification. Since the DNN defaults to 50% (a "coin flip"), this is barely better than plain confusion.</p>
 <p>For one thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-1k-DPhi.svg" alt="figure:compare-1k-DPhi.svg" title="DPhi result after 1k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>Now the DNN can see that there are an abundance of events at low $\Delta\phi$, and a higher percentage of them are background. However, most values near $\Delta\phi = \pi$ are still less than about 60% prediction. We can see that the corresponding ROC curves may have been misleading, because these two distributions really do look different.</p>
 <p>For ten thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-10k-DPhi.svg" alt="figure:compare-10k-DPhi.svg" title="DPhi result after 10k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The DNN begins to increase its confidence that values near $\Delta\phi = \pi$ are significant. This demonstrates that the DNN is on the right track to identifying the difference between samples.</p>
 <p>For one hundred thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-100k-DPhi.svg" alt="figure:compare-100k-DPhi.svg" title="DPhi result after 100k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>At this point, the DNN is now increasing its specificity. For example, now it is quite sure that events in $\Delta\phi = [0,\pi/2]$ are background events, and then the prediction begins to shift toward signal classification. Notice that a greater percentage of bins now have some kind of prediction.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>What about for the invariant mass? For one hundred epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-100-Mll.svg" alt="figure:compare-100-Mll.svg" title="Mll result after 100 epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>For one thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-1k-Mll.svg" alt="figure:compare-1k-Mll.svg" title="Mll result after 1k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>For ten thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-10k-Mll.svg" alt="figure:compare-10k-Mll.svg" title="Mll result after 10k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>And for one hundred thousand epochs:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="compare-100k-Mll.svg" alt="figure:compare-100k-Mll.svg" title="Mll result after 100k epochs"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>The pattern is similar to the learning behavior of $\Delta\phi$.</p>
 
 </div>
@@ -14077,9 +13812,9 @@ $$
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">driver</span> <span class="o">=</span> <span class="n">Driver</span> <span class="p">(</span><span class="s1">&#39;overall&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">driver</span> <span class="o">=</span> <span class="n">Driver</span> <span class="p">(</span><span class="s1">&#39;studyZll&#39;</span><span class="p">)</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">Input</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;TrainDir&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;ZllModel_0/Result.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;tree&#39;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">Output</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HistDir&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/studyZll.root&#39;</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">Output</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;HistDir&#39;</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -14547,7 +14282,6 @@ $$
 <li>METx</li>
 <li>METy</li>
 </ul>
-<p>And a selection of <a href="https://cds.cern.ch/record/2206252">Recursive Jigsaw</a> reconstructions are included. These are derived reconstruction observables that have proven useful for classifying SUSY events in the past.</p>
 
 </div>
 </div>
@@ -14557,16 +14291,8 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>This is the detector-level information. Unfortunately, the cumulative distributions of each observable are identical. We are unable to show a 2D histogram that conveniently makes their relationship obvious because there are five reconstructed objects (for six real particles). We choose a selection of <a href="https://cds.cern.ch/record/2206252">Recursive Jigsaw</a> reconstructions to study the features. These are derived reconstruction observables that have proven useful for classifying SUSY events in the past. This reconstruction scheme works around a binary decay tree.</p>
 <p><img src="RJR-DecayChain.svg" alt="figure:RJR-DecayChain.svg" title="Signal decay chain for RJR"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>In this imposed signal reconstruction, the visible particles can be swapped between $b$-jet and lepton. This will have implications for the mass and momentum of both $P$ and $C$, because it alters the four-vector of the "sibling" ($V_{2a}$ and $V_{2b}$) to $\chi$ in the decay chain. We will compare features found from raw four-vectors to these reconstructions. There are energy-scale variables:</p>
 <ul>
 <li>MPP_AA ; Eb_a_AA ; Eb_b_AA ; El_a_AA ; El_b_AA</li>
@@ -14606,7 +14332,7 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Observables such as $\phi$ have natural bounds: $[-\pi, \pi]$ (or $[0, 2\pi]$ by convention). Furthermore, there is no reason to expect any features on a uniform distribution across $\phi$ other than random fluctuations. When comparing the $\phi$ of multiple reconstructed objects, there is (in principle) no need to weight one value differently from another.</p>
+<p>There are ratio variables (and lots of shape variables), where values are defined between two bounds: [0, 1]. You can also encounter sine and cosine transformations that map angles to [-1, 1]. Observables such as $\phi$ have natural bounds: $[-\pi, \pi]$ (or $[0, 2\pi]$ by convention). Furthermore, there is no reason to expect any features on a uniform distribution across $\phi$ other than random fluctuations. When comparing the $\phi$ of multiple reconstructed objects, there is (in principle) no need to weight one value differently from another.</p>
 <p>There are also variables such as $\eta$ that could have theoretical values that go out to infinity, but combined performance groups may limit the value to something like [-2.5, 2.5]. The values that $\eta$ can take have a non-uniform falling distribution centered around 0. However, there is still (in principle) no need to weight them differently.</p>
 <p>An exception to this is energy scale observables. These are naturally bound by 0 on the left, but can take significantly high values. Consider 3 of such observable type:</p>
 <ul>
@@ -14616,8 +14342,8 @@ $$
 </ul>
 <p>The first two take different inputs, but both are most "interesting" when they take large values. We cannot say that $H_\mathrm{T}=2$ TeV is <em>twice</em> as interesting as $E_\mathrm{T}^{miss} = 1$ TeV (in fact, $E_\mathrm{T}^{miss}/\sqrt{H_\mathrm{T}}$ may be a better comparison). Nor can we say that their sum ($M_{eff}=3$ TeV) is <em>thrice</em> as interesting. Their values are of <em>relative</em> importance to us. It would be better to let the DNN discover the proper ratios (weights) on its own.</p>
 <p>Therefore, the data in the event are initially weighted such that the values are scaled and shifted to [0, 1]. The scaling for $\phi$ naturally follows from geometric implications. The $\eta$ value scales by the object selection criteria. But energy scale variables require some more thought.</p>
-<p>We want to compare values such as $p_\mathrm{T}$ and $E_\mathrm{T}^{miss}$ on an equal standing, and therefore we can choose a maximum value of these two observables as a scaling factor. However, if there is an outlier at large $p_\mathrm{T}$, then we can specify a trim percentage $n$, meaning that only events up to the $n$th percentage of the total number of ordered values are kept. We can shift the minimum value to zero if we know the data has an infrared protection against low energy particles. The outlying values can be set to a weight of "not a number" so that they are ignored.</p>
-<p>The observables to use are specified in the configuration file. Starting in line <code>31</code>, each observable is given a dictionary. This dictionary can be empty by default, meaning that no special consideration is given when scaling the observable to [0, 1]. Lines that include <code>'trim'</code> are indicating what percentage of values to keep (e.g. 0% to 99% of all values, excluding the highest 1% above the median). Lines that include <code>'range'</code> are scaled to a natural limit.</p>
+<p>We want to compare values such as $p_\mathrm{T}$ and $E_\mathrm{T}^{miss}$ on an equal standing, and therefore we can choose a maximum value of these two observables as a scaling factor. However, if there is an outlier at large $p_\mathrm{T}$, then we can specify a trim percentage $n$, meaning that only events up to the $n$th percentage of the total number of ordered values are considered for scaling. We can shift the minimum value to zero if we know the data has an infrared protection against low energy particles. The outlying values remain outside the [0, 1] range.</p>
+<p>The observables to use are specified in the configuration file. Starting in line <code>31</code>, each observable is given a dictionary. This dictionary can be empty by default, meaning that no special consideration is given when scaling the observable to [0, 1]. Lines that include <code>'trim'</code> are indicating what percentage of ordered values to include in scaling (e.g. 0% to 99% of all values, excluding the highest 1% above the median). Lines that include <code>'range'</code> are scaled to a natural limit.</p>
 
 </div>
 </div>
@@ -14640,11 +14366,9 @@ $$
 <p>One way to bridge this gap is to impose a signal reconstruction on the event analysis. If we can identify the masses of the SUSY particles (mP, mC, and mX), then we might gain some insight into the recoil energies of the visible particles. This would be a good improvement, but it would still ignore the longitudinal component of the missing energy. This is why the Recursive Jigsaw reconstruction adds so many observables to the study: it attempts to approximate <em>all</em> of the information in the event by imposing a full decay chain of four-vectors.</p>
 <p>The groups to analyze are specified in the configuration file. Starting at line <code>111</code>, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignored during training, but will still be carried through to the <code>Result.csv</code> file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:</p>
 <ul>
-<li>all observables</li>
 <li>raw detector-level observables</li>
-<li>raw detector-level observables with the masses of the generating signal model</li>
-<li>a suite of Recursive Jigsaw reconstruction observables</li>
-<li>a single topological reconstruction from Recursive Jigsaw</li>
+<li>a Recursive Jigsaw reconstruction of energies in the decay</li>
+<li>a Recursive Jigsaw of one decay possibility</li>
 </ul>
 <p>These field selections can be controlled by specifying an index number to the <code>-v</code> flag.</p>
 
@@ -14665,13 +14389,12 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>[Currently updating this part]</p>
-<p>The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs. Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.</p>
+<p>The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs (&gt;5 hours for each, times three trials). Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.</p>
 <p>Parameters:</p>
 <ul>
-<li>width = ???</li>
-<li>depth = ???</li>
-<li>epoch = ???</li>
+<li>width = 1585</li>
+<li>depth = 1</li>
+<li>epoch = 10000</li>
 </ul>
 
 </div>
@@ -14682,7 +14405,34 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>variable set...</p>
+<p>For the first variable set, we consider only the four-vectors of the visible particles and the two-vector for the missing transverse momentum. This is the raw, detector-level information that can be extracted from the event. These are given in line 113 of the configuration:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span>    <span class="p">[</span><span class="s1">&#39;METx&#39;</span><span class="p">,</span> <span class="s1">&#39;METy&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;L1_pT&#39;</span><span class="p">,</span> <span class="s1">&#39;L1_eta&#39;</span><span class="p">,</span> <span class="s1">&#39;L1_phi&#39;</span><span class="p">,</span> <span class="s1">&#39;L1_M&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;L2_pT&#39;</span><span class="p">,</span> <span class="s1">&#39;L2_eta&#39;</span><span class="p">,</span> <span class="s1">&#39;L2_phi&#39;</span><span class="p">,</span> <span class="s1">&#39;L2_M&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;B1_pT&#39;</span><span class="p">,</span> <span class="s1">&#39;B1_eta&#39;</span><span class="p">,</span> <span class="s1">&#39;B1_phi&#39;</span><span class="p">,</span> <span class="s1">&#39;B1_M&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;B2_pT&#39;</span><span class="p">,</span> <span class="s1">&#39;B2_eta&#39;</span><span class="p">,</span> <span class="s1">&#39;B2_phi&#39;</span><span class="p">,</span> <span class="s1">&#39;B2_M&#39;</span><span class="p">],</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since this is the zeroth item in the <code>SelectedFields</code> list, we can pass it to the command line with <code>-v 0</code>:</p>
 
 </div>
 </div>
@@ -14705,8 +14455,35 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>ROC figures...</p>
-<p>variable set...</p>
+<p><img src="ROC-raw.svg" alt="figure:ROC-raw.svg" title="ROC curve for raw 4-vectors"></p>
+<p>This ROC figure demonstrates that the DNN has found a very efficient separation for each of the classifications. There is no background to consider, but the signal models are treated as extraneous to each other. These curves represent peak efficiency because all information that can be extracted is represented in the raw four-vectors. Although we probably would not be able to do any better on our own, it is not exactly clear what the DNN has identified as the distinguishing features in each event.</p>
+<p>The Recursive Jigsaw reconstruction technique uses the raw four-vectors to derive a new set of observable variables that approximate these features. They may lack small bits of information, but they are tailored to the theoretical objects present in the interaction so that each object can be approximated with a complete four-vector for each frame. If the four-vectors are accurate, focusing on one component should be sensitive to the same result, such as energy (line 120):</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span>    <span class="p">[</span><span class="s1">&#39;MPP_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_a_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_b_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_a_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_b_AA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;MPP_AB&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_a_AB&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_b_AB&#39;</span><span class="p">,</span> <span class="s1">&#39;El_a_AB&#39;</span><span class="p">,</span> <span class="s1">&#39;El_b_AB&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;MPP_BA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_a_BA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_b_BA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_a_BA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_b_BA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;MPP_BB&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_a_BB&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_b_BB&#39;</span><span class="p">,</span> <span class="s1">&#39;El_a_BB&#39;</span><span class="p">,</span> <span class="s1">&#39;El_b_BB&#39;</span><span class="p">],</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Execute using the <code>-v 1</code> option:</p>
 
 </div>
 </div>
@@ -14729,8 +14506,57 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>ROC figures...</p>
-<p>etc...</p>
+<p><img src="ROC-energy.svg" alt="figure:ROC-energy.svg" title="ROC curve for RJ energy reconstruction"></p>
+<p>The result is not quite as good as the raw four-vectors, but it is still quite good. With enough epochs, it may even pleateau near the same efficiency. But for completeness, we should include more than just the energy to give the DNN a full set of variables from which to deduce the differences. But we do not actually need a full comparison for each type of decay. To demonstrate how good the approximation can be, we will limit the last training session to just the AA decay (line 126):</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span>    <span class="p">[</span><span class="s1">&#39;MPP_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_a_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb_b_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_a_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;El_b_AA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;cosPP_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;cosPa_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;cosPb_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;cosCa_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;cosCb_AA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;dphi_PP_Pa_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;dphi_PP_Pb_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;dphi_Pa_Ca_AA&#39;</span><span class="p">,</span> <span class="s1">&#39;dphi_Pb_Cb_AA&#39;</span><span class="p">],</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Execute using the <code>-v 2</code> option:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">EventClassificationDNN</span><span class="o">.</span><span class="n">Experiment</span> <span class="o">--</span><span class="n">config</span> <span class="n">EventClassificationDNN</span><span class="o">/</span><span class="n">SUSYConfig</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span> <span class="mi">2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="ROC-topo.svg" alt="figure:ROC-topo.svg" title="ROC curve for RJ reconstruction of AA"></p>
+<p>Because the set <code>Eb_a</code> and <code>El_a</code> (or <code>Eb_b</code> and <code>El_b</code>) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 less variables and is still a good approximation of all available information with a phenomenological basis of description.</p>
 
 </div>
 </div>
@@ -14785,7 +14611,7 @@ $$
 </li>
 <li><p>The data has to be in the HDF5 format. There is a tool provided by <code>rootpy</code> called <code>root2hdf5</code> that can convert ROOT files automatically. This tool also needs the <code>root_numpy</code> package because it converts branches into components of a numpy array. This tool is able to convert vectors from ROOT files into a "3D" tensor, but for best results, we recommend keeping the files flat ("2D" matrix, with event-branch as row-column). If you are converting a vector with an uncertain number of components (e.g. j0_pT, j1_pT, ..., jN_pT; where N is not a constant per event), then you can set the empty branches in the flat file to "NaN".</p>
 </li>
-<li><p>You need a sizable amount of data. In the examples, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your <em>sampling</em>. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.</p>
+<li><p>You need a sizable amount of data. In the $Z \rightarrow \ell\ell$ example, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your <em>sampling</em>. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.</p>
 </li>
 </ol>
 
@@ -15034,7 +14860,7 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From a set of data, it may be possible to identify sets or groupings of events that come from one type versus another. The goal is to draw a deterministic boundary between the types of events that maximizes the separation. Events near the boundary can still be on the wrong side of the best demarcation (with "best" needing an informed definition of its own). Perhaps you have two data classifications in mind: a signal and a background. Their distributions might look like this:</p>
+<p>From a set of data, it may be possible to identify sets or groupings of events that come from one type versus another. The goal is to draw a deterministic boundary between the types of events that maximizes the separation. Events near the boundary can still be on the wrong side of the best demarcation (with "best" needing an informed definition of its own). Perhaps you have two data classifications in mind: a signal and a background.</p>
 
 </div>
 </div>
@@ -15044,18 +14870,10 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Their distributions might look like this:</p>
 <p><img src="data-selection.svg" alt="alt-text" title="Data selection"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>In this plot, a vertical line is included as a primitive guess at one such demarcation. Events to the left of this line are rejected, and events to the right of this line are kept. Because the two distributions overlap, drawing this line at the "best" location is not a clear task because the two distributions do not have equal <em>value</em> to an analysis. Keeping signal events is valuable and rejecting background events is imperative. Therefore, a line down the middle might be too much signal loss. A line near the left side has too much background. A line near the right side has too little signal.</p>
-<p>It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative. We summarize the compatability between reality and prediction with the following table:</p>
+<p>It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative.</p>
 
 </div>
 </div>
@@ -15065,6 +14883,7 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>We summarize the compatability between reality and prediction with the following table:</p>
 <table>
 <thead><tr>
 <th style="text-align:center"></th>
@@ -15085,6 +14904,7 @@ $$
 </tr>
 </tbody>
 </table>
+<p>FP is also called a "Type I" error (or $\alpha$), and FN is also called a "Type II" error (or $\beta$). The confidence coefficient is $1 - \alpha$. Sometimes you will also see the "power" of the test, which is $1 - \beta$</p>
 
 </div>
 </div>
@@ -15095,102 +14915,33 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Combining these counting statistics can give insight into the performance of the chosen cut...</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>True Positive Rate (TPR) or Sensitivity is a measure of the probability that <em>signal</em> events are <em>selected</em> by the prediction:</p>
 $$
 TPR = \frac{TP}{TP+FN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>False Positive Rate (FPR) is a measure of the probability that <em>background</em> events are <em>selected</em> by the prediction:</p>
-$$
-FPR = \frac{FP}{FP+TN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>False Negative Rate (FNR) is a measure of the probability that <em>signal</em> events are <em>rejected</em> by the prediction:</p>
+$$<p>False Negative Rate (FNR) is a measure of the probability that <em>signal</em> events are <em>rejected</em> by the prediction:</p>
 $$
 FNR = \frac{FN}{TP+FN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>True Negative Rate (TNR) or Specificity is a measure of the probability that <em>background</em> events are <em>rejected</em> by the prediction:</p>
+$$<p>True Negative Rate (TNR) or Specificity is a measure of the probability that <em>background</em> events are <em>rejected</em> by the prediction:</p>
 $$
 TNR = \frac{TN}{FP+TN}
+$$<p>False Positive Rate (FPR) is a measure of the probability that <em>background</em> events are <em>selected</em> by the prediction:</p>
 $$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Positive Predictive Value (PPV) or Precision is a measure of the <em>success</em> of <em>selection</em> by the prediction:</p>
+FPR = \frac{FP}{FP+TN}
+$$<p>Positive Predictive Value (PPV) or Precision is a measure of the <em>success</em> of <em>selection</em> by the prediction:</p>
 $$
 PPV = \frac{TP}{TP+FP}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Negative Predictive Value (NPV) is a measure of the <em>success</em> of <em>rejection</em> by the prediction:</p>
-$$
-NPR = \frac{TN}{FN+TN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>False Discovery Rate (FDR) is a measure of the <em>failure</em> of <em>selection</em> by the prediction:</p>
+$$<p>False Discovery Rate (FDR) is a measure of the <em>failure</em> of <em>selection</em> by the prediction:</p>
 $$
 FDR = \frac{FP}{TP+FP}
+$$<p>Negative Predictive Value (NPV) is a measure of the <em>success</em> of <em>rejection</em> by the prediction:</p>
 $$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>False Omission Rate (FOR) is a measure of the <em>failure</em> of <em>rejection</em> by the prediction:</p>
+NPR = \frac{TN}{FN+TN}
+$$<p>False Omission Rate (FOR) is a measure of the <em>failure</em> of <em>rejection</em> by the prediction:</p>
 $$
 FOR = \frac{FN}{FN+TN}
+$$<p>Notice that we can form identities from these measures:</p>
+$$
+TPR + FNR = TNR + FPR = PPV + FDR = NPV + FOR = 1
 $$
 </div>
 </div>
@@ -15200,115 +14951,35 @@ $$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Some more specialized measures can be defined...</p>
 <p>Positive Likelihood Ratio (LR+) is a measure of the selection effectiveness:</p>
 $$
 LR_+ = \frac{TPR}{FPR}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Negative Likelihood Ratio (LR-) is a measure of the rejection effectiveness:</p>
+$$<p>Negative Likelihood Ratio (LR-) is a measure of the rejection effectiveness:</p>
 $$
 LR_- = \frac{FNR}{TNR}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Diagnostic Odds Ratio (DOR) is an overall measure of prediction performance:</p>
+$$<p>Diagnostic Odds Ratio (DOR) is an overall measure of prediction performance:</p>
 $$
 DOR = \frac{LR_+}{LR_-}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Accuracy (ACC) is a measure of the probability of correctly classifying events:</p>
+$$<p>Accuracy (ACC) is a measure of the probability of correctly classifying events:</p>
 $$
 ACC = \frac{TP+TN}{RP+RN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Prevalence (PREV) is a measure of the probability of correctly predicting classification:</p>
+$$<p>Prevalence (PREV) is a measure of the probability of correctly predicting classification:</p>
 $$
 PREV = \frac{PP}{RP+RN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>F1 score is the harmonic mean of precision and sensitivity:</p>
+$$<p>F1 score is the harmonic mean of precision and sensitivity:</p>
 $$
 F_1 = \frac{2TP}{2TP + FP + FN}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The Matthews correlation coefficient (MCC) is another way to quantify the classification:</p>
+$$<p>The Matthews correlation coefficient (MCC) is another way to quantify the classification:</p>
 $$
 MCC = \frac{(TP)(TN) - (FP)(FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So is Bookmaker Informedness (BM):</p>
+$$<p>Another common measure is Bookmaker Informedness (BM):</p>
 $$
 BM = TPR + TNR - 1
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>And Markedness (MK):</p>
+$$<p>And Markedness (MK):</p>
 $$
 MK = PPV + NPV - 1
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>And there are likely other statistical measures that you can find.</p>
+$$<p>And there are certainly other statistical measures that you can find.</p>
 
 </div>
 </div>
@@ -15338,28 +15009,10 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So which $x_0$ should we use? Try sweeping the vertical line across the space and document the results:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="roc-curve.svg" alt="alt-text" title="ROC curve"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>This Receiver Operating Characteristic (ROC) curve is a standard way of expressing the ability to classify two types of data: a signal and a background. It presents a dilemma: gaining signal events by contaminating them with background. This curve follows the "sweeping" motion of the vertical line in the previous plot. When you sweep the vertical line across the previous plot from left to right, you are actually following this curve from right to left. The cross-hairs on this plot correspond to the location of the vertical line shown in the previous plot. Therefore, you can see that perhaps the best way to classify the data is not to cleave the two distributions right down the middle. Maybe you can live with a lower signal acceptance because you know you need a much lower background acceptance.</p>
 <p>The shaded gray region under the diagonal is an area you hope to avoid. If the curve crosses the diagonal, it would mean that the selection is biased toward background acceptance rather than signal acceptance. This likely represents a confused DNN because it should default to 50% when it is uncertain. The DNN has probably used a primitive feature that works well overall, but it is still in the process of learning the best features. If you encounter this, something as simple as increasing the number of epochs may resolve the issue.</p>
-<p><strong>Note:</strong> The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the <a href="#Classification-Task">previous</a> section should be considered.</p>
+<p><strong>Note:</strong> The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the <a href="#Classification-Task">previous</a> section should be considered.</p>
 
 </div>
 </div>
@@ -15408,25 +15061,7 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The "width" of the DNN is the number of nodes to study simultaneously. The plot below shows the results of the AUC (red) and the amount of time taken (blue) to train 100 epochs with the depth held at 2 for a variable width in 5 different trial runs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="width.svg" alt="alt-text" title="Optimizing by varying the width"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>From this plot, it was determined that a wide training model is better than a narrow one up to a size of about 1000, where the AUC converges. We interpret this as the randomized nature of the training process having enough oppotunity to learn the same features in each trial. We consider this to be a target for optimization because of the reliability of outcome after training.</p>
 
 </div>
@@ -15447,27 +15082,9 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The "depth" of the DNN is the number of hidden layers. The plot below shows the results of the AUC (red) and the amount of time taken (blue) to train 100 epochs with the width held at 32  for a variable depth in 5 different trial runs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="depth.svg" alt="alt-text" title="Optimizing by varying the depth"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>From this plot, it was determined that a large number of hidden layers is undesirable. The training outcome gets confused (approaching 50%) and the timescale grows. Therefore, it was decided to fix the depth to a value of 1 and continue optimizing by other means.</p>
-<p>This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect, or the population of events may be identical. It is expected that the minimum information needed to classify the event comes from <em>features</em> of the event -- e.g. combinations of observables.</p>
+<p>This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect.</p>
 
 </div>
 </div>
@@ -15487,25 +15104,7 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The "epoch" is the cycle number of tests during training. The plot below shows the results of the AUC (red) and the amount of time taken (blue) to train a DNN with a width of 64 and a depth of 1 for a variable number of epochs in 5 different trial runs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="epoch.svg" alt="alt-text" title="Optimizing by varying the epoch"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>From this plot, it was determined that a larger number of epochs means a better performance. We conclude that the number of epochs is therefore a matter of choice in how long the user wants to wait.</p>
 
 </div>
@@ -15526,25 +15125,7 @@ $$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Having identified the width and epochs as the critical parameters in the performance of the DNN, we wanted to know what combination to use. We recognize that both parameters gave a direct consequence of how often the data needs to be read from disk and stored into memory. We now want to optimize the training in terms of I/O access. Starting from the previous finding that training converges for width = 1000 and epochs = 100, we optimize performance against the frequency of needing to read from data. The plot below shows the results of the AUC (red) and the amount of time taken (blue) to train a DNN with a depth of 1 with a variable width and a number of epochs determined by 100k/width in 5 different trial runs.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="config.svg" alt="alt-text" title="Configuration chosen by minimizing timescale"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see that there is a minimum timecale, while the AUC remains near a stable value. This means we can get approximately the same performance in the least amount of time if we fix width to around 1585.</p>
 
 </div>

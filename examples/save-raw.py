@@ -10,7 +10,7 @@ from rootpy.io import root_open
 hists = {}
 for a in ['Zll', 'Rndm']:
     # Open the ROOT file:
-    f = root_open(os.getenv('HistDir') + '/study%s.root' % a)
+    f = root_open(os.getenv('HistDir') + '/raw%s.root' % a)
 
     # We have three histograms from each classification:
     hists[a] = {}

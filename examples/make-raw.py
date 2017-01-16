@@ -27,9 +27,9 @@ for study in ['Zll', 'Rndm']:
     else: tname = 'Rndm2LOS'
 
     # Now we initialize the Driver and set the I/O:
-    driver = Driver ('overall')
+    driver = Driver ('raw' + study)
     driver.Input (os.getenv('SampleDirZll') + '/Zll.h5', tname)
-    driver.Output (os.getenv('HistDir') + '/study%s.root' % study)
+    driver.Output (os.getenv('HistDir'))
 
     # hPyROOT supports creating expressions from an arbitrary construction of
     # labels (columns) in the dataset. By defining a set of pyobjects and passing

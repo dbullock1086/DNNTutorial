@@ -365,11 +365,20 @@ In the input data file, there are only two objects: `LP` and `LM`. These two obj
 - $\eta$
 - $E$
 
-This exercise will demonstrate the performance of the DNN using raw information. Because of the way the samples were generated, most of these values will be identical:
+This exercise will demonstrate the performance of the DNN using raw information. Because of the way the samples were generated, most of these values will be identical.
 
-![figure:compare-pT.svg](compare-pT.svg "Comparison of lepton pT in Data") ![figure:compare-eta.svg](compare-eta.svg "Comparison of lepton eta in Data") ![figure:compare-E.svg](compare-E.svg "Comparison of lepton E in Data")
+Transverse momentum:
 
-The exception is in $\phi$:
+![figure:compare-pT.svg](compare-pT.svg "Comparison of lepton pT in Data")
+
+Pseudo-rapidity:
+
+![figure:compare-eta.svg](compare-eta.svg "Comparison of lepton eta in Data")
+
+Energy:
+![figure:compare-E.svg](compare-E.svg "Comparison of lepton E in Data")
+
+The exception is in the azimuthal angle:
 
 ![figure:compare-phi.svg](compare-phi.svg "Comparison of lepton phi in Data")
 
@@ -446,9 +455,9 @@ Now we initialize the `Driver` and set the I/O:
 
 
 ```python
-    driver = Driver ('overall')
+    driver = Driver ('raw' + study)
     driver.Input (os.getenv('SampleDir') + '/Zll.h5', tname)
-    driver.Output (os.getenv('HistDir') + '/study%s.root' % study)
+    driver.Output (os.getenv('HistDir'))
 ```
 
 hPyROOT supports creating expressions from an arbitrary construction of labels (columns) in the dataset. By defining a set of `pyobjects` and passing them to this `EventStore`, they can be evaluated for each event and are made available for subsequent algorithms to use them.
@@ -559,7 +568,7 @@ Open the ROOT file:
 
 
 ```python
-    f = root_open('study%s.root' % a)
+    f = root_open('raw%s.root' % a)
 ```
 
 We have three histograms from each classification:
@@ -856,9 +865,9 @@ Now we initialize the `Driver` and set the I/O:
 
 
 ```python
-driver = Driver ('overall')
+driver = Driver ('studyZll')
 driver.Input (os.getenv('TrainDir') + 'ZllModel_0/Result.h5', 'tree')
-driver.Output (os.getenv('HistDir') + '/studyZll.root')
+driver.Output (os.getenv('HistDir'))
 ```
 
 hPyROOT supports creating expressions from an arbitrary construction of labels (columns) in the dataset. By defining a set of `pyobjects` and passing them to this `EventStore`, they can be evaluated for each event and are made available for subsequent algorithms to use them.
@@ -1062,7 +1071,7 @@ They contain two-vectors for $E_\mathrm{T}^{miss}$:
 - METx
 - METy
 
-And a selection of [Recursive Jigsaw](https://cds.cern.ch/record/2206252) reconstructions are included. These are derived reconstruction observables that have proven useful for classifying SUSY events in the past.
+This is the detector-level information. Unfortunately, the cumulative distributions of each observable are identical. We are unable to show a 2D histogram that conveniently makes their relationship obvious because there are five reconstructed objects (for six real particles). We choose a selection of [Recursive Jigsaw](https://cds.cern.ch/record/2206252) reconstructions to study the features. These are derived reconstruction observables that have proven useful for classifying SUSY events in the past. This reconstruction scheme works around a binary decay tree.
 
 ![figure:RJR-DecayChain.svg](RJR-DecayChain.svg "Signal decay chain for RJR")
 
@@ -1086,7 +1095,7 @@ And separation angles:
 
 ## Observable Scaling
 
-Observables such as $\phi$ have natural bounds: $[-\pi, \pi]$ (or $[0, 2\pi]$ by convention). Furthermore, there is no reason to expect any features on a uniform distribution across $\phi$ other than random fluctuations. When comparing the $\phi$ of multiple reconstructed objects, there is (in principle) no need to weight one value differently from another.
+There are ratio variables (and lots of shape variables), where values are defined between two bounds: [0, 1]. You can also encounter sine and cosine transformations that map angles to [-1, 1]. Observables such as $\phi$ have natural bounds: $[-\pi, \pi]$ (or $[0, 2\pi]$ by convention). Furthermore, there is no reason to expect any features on a uniform distribution across $\phi$ other than random fluctuations. When comparing the $\phi$ of multiple reconstructed objects, there is (in principle) no need to weight one value differently from another.
 
 There are also variables such as $\eta$ that could have theoretical values that go out to infinity, but combined performance groups may limit the value to something like [-2.5, 2.5]. The values that $\eta$ can take have a non-uniform falling distribution centered around 0. However, there is still (in principle) no need to weight them differently.
 
@@ -1099,9 +1108,9 @@ The first two take different inputs, but both are most "interesting" when they t
 
 Therefore, the data in the event are initially weighted such that the values are scaled and shifted to [0, 1]. The scaling for $\phi$ naturally follows from geometric implications. The $\eta$ value scales by the object selection criteria. But energy scale variables require some more thought.
 
-We want to compare values such as $p_\mathrm{T}$ and $E_\mathrm{T}^{miss}$ on an equal standing, and therefore we can choose a maximum value of these two observables as a scaling factor. However, if there is an outlier at large $p_\mathrm{T}$, then we can specify a trim percentage $n$, meaning that only events up to the $n$th percentage of the total number of ordered values are kept. We can shift the minimum value to zero if we know the data has an infrared protection against low energy particles. The outlying values can be set to a weight of "not a number" so that they are ignored.
+We want to compare values such as $p_\mathrm{T}$ and $E_\mathrm{T}^{miss}$ on an equal standing, and therefore we can choose a maximum value of these two observables as a scaling factor. However, if there is an outlier at large $p_\mathrm{T}$, then we can specify a trim percentage $n$, meaning that only events up to the $n$th percentage of the total number of ordered values are considered for scaling. We can shift the minimum value to zero if we know the data has an infrared protection against low energy particles. The outlying values remain outside the [0, 1] range.
 
-The observables to use are specified in the configuration file. Starting in line `31`, each observable is given a dictionary. This dictionary can be empty by default, meaning that no special consideration is given when scaling the observable to [0, 1]. Lines that include `'trim'` are indicating what percentage of values to keep (e.g. 0% to 99% of all values, excluding the highest 1% above the median). Lines that include `'range'` are scaled to a natural limit.
+The observables to use are specified in the configuration file. Starting in line `31`, each observable is given a dictionary. This dictionary can be empty by default, meaning that no special consideration is given when scaling the observable to [0, 1]. Lines that include `'trim'` are indicating what percentage of ordered values to include in scaling (e.g. 0% to 99% of all values, excluding the highest 1% above the median). Lines that include `'range'` are scaled to a natural limit.
 
 ## Field Selections
 
@@ -1110,44 +1119,81 @@ We have quite a few observables to work with, so do we need all of them? Which o
 One way to bridge this gap is to impose a signal reconstruction on the event analysis. If we can identify the masses of the SUSY particles (mP, mC, and mX), then we might gain some insight into the recoil energies of the visible particles. This would be a good improvement, but it would still ignore the longitudinal component of the missing energy. This is why the Recursive Jigsaw reconstruction adds so many observables to the study: it attempts to approximate *all* of the information in the event by imposing a full decay chain of four-vectors.
 
 The groups to analyze are specified in the configuration file. Starting at line `111`, groups are defined by lists of observables. Each item in the list is compared to the others when training. Any observable not included in the list is ignored during training, but will still be carried through to the `Result.csv` file. By masking an observable from training, you can see how much effect it has on the performance of the DNN. There are a few groups already specified in the configuration file:
-- all observables
 - raw detector-level observables
-- raw detector-level observables with the masses of the generating signal model
-- a suite of Recursive Jigsaw reconstruction observables
-- a single topological reconstruction from Recursive Jigsaw
+- a Recursive Jigsaw reconstruction of energies in the decay
+- a Recursive Jigsaw of one decay possibility
 
 These field selections can be controlled by specifying an index number to the `-v` flag.
 
 ## Training and Analysis
 
-[Currently updating this part]
-
-The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs. Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.
+The training for this topology can take a long time on the UTA-HEP cluster, even with its GPUs (>5 hours for each, times three trials). Therefore, if you are running on lxplus, hopefully you can run batch jobs overnight, otherwise just read through the rest if you are sitting in for the ATLAS software tutorial.
 
 Parameters:
-- width = ???
-- depth = ???
-- epoch = ???
+- width = 1585
+- depth = 1
+- epoch = 10000
 
-variable set...
+For the first variable set, we consider only the four-vectors of the visible particles and the two-vector for the missing transverse momentum. This is the raw, detector-level information that can be extracted from the event. These are given in line 113 of the configuration:
+
+
+```python
+    ['METx', 'METy',
+     'L1_pT', 'L1_eta', 'L1_phi', 'L1_M',
+     'L2_pT', 'L2_eta', 'L2_phi', 'L2_M',
+     'B1_pT', 'B1_eta', 'B1_phi', 'B1_M',
+     'B2_pT', 'B2_eta', 'B2_phi', 'B2_M'],
+```
+
+Since this is the zeroth item in the `SelectedFields` list, we can pass it to the command line with `-v 0`:
 
 
 ```python
 python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSYConfig.py -v 0
 ```
 
-ROC figures...
+![figure:ROC-raw.svg](ROC-raw.svg "ROC curve for raw 4-vectors")
 
-variable set...
+This ROC figure demonstrates that the DNN has found a very efficient separation for each of the classifications. There is no background to consider, but the signal models are treated as extraneous to each other. These curves represent peak efficiency because all information that can be extracted is represented in the raw four-vectors. Although we probably would not be able to do any better on our own, it is not exactly clear what the DNN has identified as the distinguishing features in each event.
+
+The Recursive Jigsaw reconstruction technique uses the raw four-vectors to derive a new set of observable variables that approximate these features. They may lack small bits of information, but they are tailored to the theoretical objects present in the interaction so that each object can be approximated with a complete four-vector for each frame. If the four-vectors are accurate, focusing on one component should be sensitive to the same result, such as energy (line 120):
+
+
+```python
+    ['MPP_AA', 'Eb_a_AA', 'Eb_b_AA', 'El_a_AA', 'El_b_AA',
+     'MPP_AB', 'Eb_a_AB', 'Eb_b_AB', 'El_a_AB', 'El_b_AB',
+     'MPP_BA', 'Eb_a_BA', 'Eb_b_BA', 'El_a_BA', 'El_b_BA',
+     'MPP_BB', 'Eb_a_BB', 'Eb_b_BB', 'El_a_BB', 'El_b_BB'],
+```
+
+Execute using the `-v 1` option:
 
 
 ```python
 python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSYConfig.py -v 1
 ```
 
-ROC figures...
+![figure:ROC-energy.svg](ROC-energy.svg "ROC curve for RJ energy reconstruction")
 
-etc...
+The result is not quite as good as the raw four-vectors, but it is still quite good. With enough epochs, it may even pleateau near the same efficiency. But for completeness, we should include more than just the energy to give the DNN a full set of variables from which to deduce the differences. But we do not actually need a full comparison for each type of decay. To demonstrate how good the approximation can be, we will limit the last training session to just the AA decay (line 126):
+
+
+```python
+    ['MPP_AA', 'Eb_a_AA', 'Eb_b_AA', 'El_a_AA', 'El_b_AA',
+     'cosPP_AA', 'cosPa_AA', 'cosPb_AA', 'cosCa_AA', 'cosCb_AA',
+     'dphi_PP_Pa_AA', 'dphi_PP_Pb_AA', 'dphi_Pa_Ca_AA', 'dphi_Pb_Cb_AA'],
+```
+
+Execute using the `-v 2` option:
+
+
+```python
+python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSYConfig.py -v 2
+```
+
+![figure:ROC-topo.svg](ROC-topo.svg "ROC curve for RJ reconstruction of AA")
+
+Because the set `Eb_a` and `El_a` (or `Eb_b` and `El_b`) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 less variables and is still a good approximation of all available information with a phenomenological basis of description.
 
 ## Suggested tinkering for SUSY topology
 
@@ -1165,7 +1211,7 @@ If you have your own dataset that you want to use for your own classification st
 
 2. The data has to be in the HDF5 format. There is a tool provided by `rootpy` called `root2hdf5` that can convert ROOT files automatically. This tool also needs the `root_numpy` package because it converts branches into components of a numpy array. This tool is able to convert vectors from ROOT files into a "3D" tensor, but for best results, we recommend keeping the files flat ("2D" matrix, with event-branch as row-column). If you are converting a vector with an uncertain number of components (e.g. j0_pT, j1_pT, ..., jN_pT; where N is not a constant per event), then you can set the empty branches in the flat file to "NaN".
 
-3. You need a sizable amount of data. In the examples, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your *sampling*. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.
+3. You need a sizable amount of data. In the $Z \rightarrow \ell\ell$ example, we were outputing 10k events from datasets that contained 1M events. The output number is important because you are unlikely to understand the features from sparse data. The number of total events is important because you want to give the DNN as many unique events to look at as possible. If not, the DNN may just learn your *sampling*. In other words, given enough time the DNN could find your exact copy of a dataset to be its feature. Under this undesirable scenario, if you generated a new set of data from the same production process, the DNN may not give your new dataset a high classification score since it is not identical.
 
 ---
 
@@ -1247,18 +1293,24 @@ Since writing the cost function can be tedious, error prone, and time-consuming,
 
 ## Classification Task
 
-From a set of data, it may be possible to identify sets or groupings of events that come from one type versus another. The goal is to draw a deterministic boundary between the types of events that maximizes the separation. Events near the boundary can still be on the wrong side of the best demarcation (with "best" needing an informed definition of its own). Perhaps you have two data classifications in mind: a signal and a background. Their distributions might look like this:
+From a set of data, it may be possible to identify sets or groupings of events that come from one type versus another. The goal is to draw a deterministic boundary between the types of events that maximizes the separation. Events near the boundary can still be on the wrong side of the best demarcation (with "best" needing an informed definition of its own). Perhaps you have two data classifications in mind: a signal and a background.
+
+Their distributions might look like this:
 
 ![alt-text](data-selection.svg "Data selection")
 
 In this plot, a vertical line is included as a primitive guess at one such demarcation. Events to the left of this line are rejected, and events to the right of this line are kept. Because the two distributions overlap, drawing this line at the "best" location is not a clear task because the two distributions do not have equal *value* to an analysis. Keeping signal events is valuable and rejecting background events is imperative. Therefore, a line down the middle might be too much signal loss. A line near the left side has too much background. A line near the right side has too little signal.
 
-It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative. We summarize the compatability between reality and prediction with the following table:
+It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative.
+
+We summarize the compatability between reality and prediction with the following table:
 
 |     | Predicted Positive (PP) | Predicted Negative (PN) |
 | :-: | :---------------------: | :---------------------: |
 | **Real Positive (RP)** | True Positive (TP) | False Negative (FN) |
 | **Real Negative (RN)** | False Positive (FP) | True Negative (TN) |
+
+FP is also called a "Type I" error (or $\alpha$), and FN is also called a "Type II" error (or $\beta$). The confidence coefficient is $1 - \alpha$. Sometimes you will also see the "power" of the test, which is $1 - \beta$
 
 Combining these counting statistics can give insight into the performance of the chosen cut...
 
@@ -1266,12 +1318,6 @@ True Positive Rate (TPR) or Sensitivity is a measure of the probability that *si
 
 $$
 TPR = \frac{TP}{TP+FN}
-$$
-
-False Positive Rate (FPR) is a measure of the probability that *background* events are *selected* by the prediction:
-
-$$
-FPR = \frac{FP}{FP+TN}
 $$
 
 False Negative Rate (FNR) is a measure of the probability that *signal* events are *rejected* by the prediction:
@@ -1286,16 +1332,16 @@ $$
 TNR = \frac{TN}{FP+TN}
 $$
 
+False Positive Rate (FPR) is a measure of the probability that *background* events are *selected* by the prediction:
+
+$$
+FPR = \frac{FP}{FP+TN}
+$$
+
 Positive Predictive Value (PPV) or Precision is a measure of the *success* of *selection* by the prediction:
 
 $$
 PPV = \frac{TP}{TP+FP}
-$$
-
-Negative Predictive Value (NPV) is a measure of the *success* of *rejection* by the prediction:
-
-$$
-NPR = \frac{TN}{FN+TN}
 $$
 
 False Discovery Rate (FDR) is a measure of the *failure* of *selection* by the prediction:
@@ -1304,11 +1350,25 @@ $$
 FDR = \frac{FP}{TP+FP}
 $$
 
+Negative Predictive Value (NPV) is a measure of the *success* of *rejection* by the prediction:
+
+$$
+NPR = \frac{TN}{FN+TN}
+$$
+
 False Omission Rate (FOR) is a measure of the *failure* of *rejection* by the prediction:
 
 $$
 FOR = \frac{FN}{FN+TN}
 $$
+
+Notice that we can form identities from these measures:
+
+$$
+TPR + FNR = TNR + FPR = PPV + FDR = NPV + FOR = 1
+$$
+
+Some more specialized measures can be defined...
 
 Positive Likelihood Ratio (LR+) is a measure of the selection effectiveness:
 
@@ -1352,7 +1412,7 @@ $$
 MCC = \frac{(TP)(TN) - (FP)(FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
 $$
 
-So is Bookmaker Informedness (BM):
+Another common measure is Bookmaker Informedness (BM):
 
 $$
 BM = TPR + TNR - 1
@@ -1364,7 +1424,7 @@ $$
 MK = PPV + NPV - 1
 $$
 
-And there are likely other statistical measures that you can find.
+And there are certainly other statistical measures that you can find.
 
 ---
 
@@ -1378,7 +1438,7 @@ This Receiver Operating Characteristic (ROC) curve is a standard way of expressi
 
 The shaded gray region under the diagonal is an area you hope to avoid. If the curve crosses the diagonal, it would mean that the selection is biased toward background acceptance rather than signal acceptance. This likely represents a confused DNN because it should default to 50% when it is uncertain. The DNN has probably used a primitive feature that works well overall, but it is still in the process of learning the best features. If you encounter this, something as simple as increasing the number of epochs may resolve the issue.
 
-**Note:** The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the [previous](#Classification-Task) section should be considered.
+**Note:** The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the [previous](#Classification-Task) section should be considered.
 
 ---
 
@@ -1402,7 +1462,7 @@ The "depth" of the DNN is the number of hidden layers. The plot below shows the 
 
 From this plot, it was determined that a large number of hidden layers is undesirable. The training outcome gets confused (approaching 50%) and the timescale grows. Therefore, it was decided to fix the depth to a value of 1 and continue optimizing by other means.
 
-This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect, or the population of events may be identical. It is expected that the minimum information needed to classify the event comes from *features* of the event -- e.g. combinations of observables.
+This result should not be too surprising. Since the separation is well-approximated by just comparing two observables directly to each other (LP and LM), we do not need anything very complicated to find a good separation. The DNN just needs to find the best boundary to draw between the raw observables in the dataset. In a more complex topology (e.g. $bb\ell\ell + E_\mathrm{T}^{miss}$), the raw observables may be harder to dissect.
 
 ### Epoch
 
