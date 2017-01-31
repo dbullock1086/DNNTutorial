@@ -3,7 +3,6 @@
 import os # access to environment variables
 from eventloop.Driver import * # this collects all job info
 from eventloop.EventStore import * # this will evaluate expressions involving data
-from pyobjects.VarDef import * # define raw dataset labels to read
 from pyobjects.LorentzDef import * # create a four-vector directly from data
 
 from elalgs.InvMass import * # calculate invariant mass
@@ -22,17 +21,8 @@ driver.Output (os.getenv('HistDir'))
 # for subsequent algorithms to use them.
 estore = EventStore ('estore')
 
-# One such pyobject just makes a direct copy of one value from the dataset. We
-# just need to know the prediction outcome. Notice the new nomenclature
-# associated with the label.
-predict = VarDef ('predict', 'predict_0')
-estore.AddVar (predict)
-
-truth = VarDef ('truth', 'true_0')
-estore.AddVar (truth)
-
-# Alternatively, you can define four-vectors by component, and these components
-# are updated per event.
+# You can define four-vectors by component, and these components are updated per
+# event.
 LP = LorentzDef ('LP',
                  ['LP_pT', 'LP_eta', 'LP_phi', 'LP_E'],
                  mode='ptetaphie')
@@ -57,17 +47,17 @@ driver.Alg (DPhi)
 # Create 2D histograms
 h_InvMass = HistFill ('h_Mll',
                       'Mll', 20, 0, 200,
-                      'predict', 21, 0, 1.05)
+                      'predict_0', 21, 0, 1.05)
 driver.Alg (h_InvMass)
 
 h_DPhi = HistFill ('h_DPhi',
                    'DPhi', 20, 0, 3.1416,
-                   'predict', 21, 0, 1.05)
+                   'predict_0', 21, 0, 1.05)
 driver.Alg (h_DPhi)
 
 h_perf = HistFill ('h_perf',
-                   'predict', 21, 0, 1.05,
-                   'truth', 2, 0, 2)
+                   'predict_0', 21, 0, 1.05,
+                   'true_0', 2, 0, 2)
 driver.Alg (h_perf)
 
 # And submit once you're done

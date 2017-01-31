@@ -4,7 +4,6 @@
 import os # access to environment variables
 from eventloop.Driver import * # this collects all job info
 from eventloop.EventStore import * # this will evaluate expressions involving data
-from pyobjects.VarDef import * # define raw dataset labels to read
 from pyobjects.LorentzDef import * # create a four-vector directly from data
 
 # To facilitate calculating new observables from raw four-vectors, we employ the
@@ -37,17 +36,9 @@ for study in ['Zll', 'Rndm']:
     # available for subsequent algorithms to use them.
     estore = EventStore ('estore')
 
-    # One such pyobject just makes a direct copy of one value from the dataset.
-    # Notice that you can define a new name to associate with the label.
-    LPphi = VarDef ('LPphi', 'LP_phi')
-    estore.AddVar (LPphi)
-
-    LMphi = VarDef ('LMphi', 'LM_phi')
-    estore.AddVar (LMphi)
-
-    # Alternatively, you can define four-vectors by component, and these
-    # components are updated per event.
-    LP = LorentzDef ('LP',
+    # You can define four-vectors by component, and these components are updated
+    # per event.
+    LP = LorentzDef ('LP'
                      ['LP_pT', 'LP_eta', 'LP_phi', 'LP_E'],
                      mode='ptetaphie')
     estore.AddVar (LP)
@@ -71,8 +62,8 @@ for study in ['Zll', 'Rndm']:
     # Then use these new variables to fill histograms. We have 2D histograms of
     # dphi for the two objects:
     h_LPphi_LMphi = HistFill ('h_LPphi_LMphi',
-                              'LPphi', 20, -3.1416, 3.1416,
-                              'LMphi', 20, -3.1416, 3.1416)
+                              'LP_phi', 20, -3.1416, 3.1416,
+                              'LM_phi', 20, -3.1416, 3.1416)
     driver.Alg (h_LPphi_LMphi)
 
     # And 1D histograms of invariant mass and dphi.

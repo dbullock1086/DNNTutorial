@@ -419,7 +419,6 @@ hPyROOT jobs will all start with importing the necessary modules and objects:
 import os # access to environment variables
 from eventloop.Driver import * # this collects all job info
 from eventloop.EventStore import * # this will evaluate expressions involving data
-from pyobjects.VarDef import * # define raw dataset labels to read
 from pyobjects.LorentzDef import * # create a four-vector directly from data
 ```
 
@@ -467,18 +466,7 @@ hPyROOT supports creating expressions from an arbitrary construction of labels (
     estore = EventStore ('estore')
 ```
 
-One such `pyobject` just makes a direct copy of one value from the dataset. Notice the new nomenclature associated with the label.
-
-
-```python
-    LPphi = VarDef ('LPphi', 'LP_phi')
-    estore.AddVar (LPphi)
-
-    LMphi = VarDef ('LMphi', 'LM_phi')
-    estore.AddVar (LMphi)
-```
-
-Alternatively, you can define four-vectors by component, and these components are updated per event.
+You can define four-vectors by component, and these components are updated per event.
 
 
 ```python
@@ -516,8 +504,8 @@ Then use these new variables to fill histograms. We have 2D histograms of $\phi$
 
 ```python
     h_LPphi_LMphi = HistFill ('h_LPphi_LMphi',
-                              'LPphi', 20, -3.1416, 3.1416,
-                              'LMphi', 20, -3.1416, 3.1416)
+                              'LP_phi', 20, -3.1416, 3.1416,
+                              'LM_phi', 20, -3.1416, 3.1416)
     driver.Alg (h_LPphi_LMphi)
 ```
 
@@ -842,7 +830,6 @@ We begin by importing the necessary modules and objects:
 import os # access to environment variables
 from eventloop.Driver import * # this collects all job info
 from eventloop.EventStore import * # this will evaluate expressions involving data
-from pyobjects.VarDef import * # define raw dataset labels to read
 from pyobjects.LorentzDef import * # create a four-vector directly from data
 ```
 
@@ -877,18 +864,7 @@ hPyROOT supports creating expressions from an arbitrary construction of labels (
 estore = EventStore ('estore')
 ```
 
-One such `pyobject` just makes a direct copy of one value from the dataset. We just need to know the prediction outcome. Notice the new nomenclature associated with the label.
-
-
-```python
-    predict = VarDef ('predict', 'predict_0')
-    estore.AddVar (predict)
-
-    truth = VarDef ('truth', 'true_0')
-    estore.AddVar (truth)
-```
-
-Alternatively, you can define four-vectors by component, and these components are updated per event.
+You can define four-vectors by component, and these components are updated per event.
 
 
 ```python
@@ -927,17 +903,17 @@ Create 2D histograms:
 ```python
 h_InvMass = HistFill ('h_Mll',
                       'Mll', 20, 0, 200,
-                      'predict', 21, 0, 1.05)
+                      'predict_0', 21, 0, 1.05)
 driver.Alg (h_InvMass)
 
 h_DPhi = HistFill ('h_DPhi',
                    'DPhi', 20, 0, 3.1416,
-                   'predict', 21, 0, 1.05)
+                   'predict_0', 21, 0, 1.05)
 driver.Alg (h_DPhi)
 
 h_perf = HistFill ('h_perf',
-                   'predict', 21, 0, 1.05,
-                   'truth', 2, 0, 2)
+                   'predict_0', 21, 0, 1.05,
+                   'true_0', 2, 0, 2)
 driver.Alg (h_perf)
 ```
 
@@ -1193,7 +1169,7 @@ python -m EventClassificationDNN.Experiment --config EventClassificationDNN/SUSY
 
 ![figure:ROC-topo.svg](ROC-topo.svg "ROC curve for RJ reconstruction of AA")
 
-Because the set `Eb_a` and `El_a` (or `Eb_b` and `El_b`) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 less variables and is still a good approximation of all available information with a phenomenological basis of description.
+Because the set `Eb_a` and `El_a` (or `Eb_b` and `El_b`) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 fewer variables and is still a good approximation of all available information with a phenomenological basis of description.
 
 ## Suggested tinkering for SUSY topology
 
@@ -1255,25 +1231,9 @@ Note that HDF5 is a storage format, but data can be accessed in different ways. 
 import os, h5py
 f = h5py.File(os.getenv('SampleDir') + '/Zll.h5')
 f.keys()
-```
-
-
-```python
 f["AA_Gen"]
-```
-
-
-```python
 f["AA_Gen"][0:2]
-```
-
-
-```python
 f["AA_Gen"][0]["L1_pT"]
-```
-
-
-```python
 f["AA_Gen"]["L1_pT"][0:10]
 ```
 
@@ -1301,7 +1261,7 @@ Their distributions might look like this:
 
 In this plot, a vertical line is included as a primitive guess at one such demarcation. Events to the left of this line are rejected, and events to the right of this line are kept. Because the two distributions overlap, drawing this line at the "best" location is not a clear task because the two distributions do not have equal *value* to an analysis. Keeping signal events is valuable and rejecting background events is imperative. Therefore, a line down the middle might be too much signal loss. A line near the left side has too much background. A line near the right side has too little signal.
 
-It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative.
+It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive (to the right), and the rejection is called Predicted Negative (to the left).
 
 We summarize the compatability between reality and prediction with the following table:
 
@@ -1438,7 +1398,7 @@ This Receiver Operating Characteristic (ROC) curve is a standard way of expressi
 
 The shaded gray region under the diagonal is an area you hope to avoid. If the curve crosses the diagonal, it would mean that the selection is biased toward background acceptance rather than signal acceptance. This likely represents a confused DNN because it should default to 50% when it is uncertain. The DNN has probably used a primitive feature that works well overall, but it is still in the process of learning the best features. If you encounter this, something as simple as increasing the number of epochs may resolve the issue.
 
-**Note:** The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the [previous](#Classification-Task) section should be considered.
+**Note:** The results of the DNN outputs a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the [previous](#Classification-Task) section should be considered.
 
 ---
 

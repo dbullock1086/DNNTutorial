@@ -12767,7 +12767,6 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">os</span> <span class="c1"># access to environment variables</span>
 <span class="kn">from</span> <span class="nn">eventloop.Driver</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># this collects all job info</span>
 <span class="kn">from</span> <span class="nn">eventloop.EventStore</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># this will evaluate expressions involving data</span>
-<span class="kn">from</span> <span class="nn">pyobjects.VarDef</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># define raw dataset labels to read</span>
 <span class="kn">from</span> <span class="nn">pyobjects.LorentzDef</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># create a four-vector directly from data</span>
 </pre></div>
 
@@ -12905,34 +12904,7 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One such <code>pyobject</code> just makes a direct copy of one value from the dataset. Notice the new nomenclature associated with the label.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">LPphi</span> <span class="o">=</span> <span class="n">VarDef</span> <span class="p">(</span><span class="s1">&#39;LPphi&#39;</span><span class="p">,</span> <span class="s1">&#39;LP_phi&#39;</span><span class="p">)</span>
-    <span class="n">estore</span><span class="o">.</span><span class="n">AddVar</span> <span class="p">(</span><span class="n">LPphi</span><span class="p">)</span>
-
-    <span class="n">LMphi</span> <span class="o">=</span> <span class="n">VarDef</span> <span class="p">(</span><span class="s1">&#39;LMphi&#39;</span><span class="p">,</span> <span class="s1">&#39;LM_phi&#39;</span><span class="p">)</span>
-    <span class="n">estore</span><span class="o">.</span><span class="n">AddVar</span> <span class="p">(</span><span class="n">LMphi</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Alternatively, you can define four-vectors by component, and these components are updated per event.</p>
+<p>You can define four-vectors by component, and these components are updated per event.</p>
 
 </div>
 </div>
@@ -13024,8 +12996,8 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">h_LPphi_LMphi</span> <span class="o">=</span> <span class="n">HistFill</span> <span class="p">(</span><span class="s1">&#39;h_LPphi_LMphi&#39;</span><span class="p">,</span>
-                              <span class="s1">&#39;LPphi&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.1416</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">,</span>
-                              <span class="s1">&#39;LMphi&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.1416</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">)</span>
+                              <span class="s1">&#39;LP_phi&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.1416</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">,</span>
+                              <span class="s1">&#39;LM_phi&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.1416</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">)</span>
     <span class="n">driver</span><span class="o">.</span><span class="n">Alg</span> <span class="p">(</span><span class="n">h_LPphi_LMphi</span><span class="p">)</span>
 </pre></div>
 
@@ -13741,7 +13713,6 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">os</span> <span class="c1"># access to environment variables</span>
 <span class="kn">from</span> <span class="nn">eventloop.Driver</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># this collects all job info</span>
 <span class="kn">from</span> <span class="nn">eventloop.EventStore</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># this will evaluate expressions involving data</span>
-<span class="kn">from</span> <span class="nn">pyobjects.VarDef</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># define raw dataset labels to read</span>
 <span class="kn">from</span> <span class="nn">pyobjects.LorentzDef</span> <span class="kn">import</span> <span class="o">*</span> <span class="c1"># create a four-vector directly from data</span>
 </pre></div>
 
@@ -13850,34 +13821,7 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>One such <code>pyobject</code> just makes a direct copy of one value from the dataset. We just need to know the prediction outcome. Notice the new nomenclature associated with the label.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span>    <span class="n">predict</span> <span class="o">=</span> <span class="n">VarDef</span> <span class="p">(</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="s1">&#39;predict_0&#39;</span><span class="p">)</span>
-    <span class="n">estore</span><span class="o">.</span><span class="n">AddVar</span> <span class="p">(</span><span class="n">predict</span><span class="p">)</span>
-
-    <span class="n">truth</span> <span class="o">=</span> <span class="n">VarDef</span> <span class="p">(</span><span class="s1">&#39;truth&#39;</span><span class="p">,</span> <span class="s1">&#39;true_0&#39;</span><span class="p">)</span>
-    <span class="n">estore</span><span class="o">.</span><span class="n">AddVar</span> <span class="p">(</span><span class="n">truth</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Alternatively, you can define four-vectors by component, and these components are updated per event.</p>
+<p>You can define four-vectors by component, and these components are updated per event.</p>
 
 </div>
 </div>
@@ -13970,17 +13914,17 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">h_InvMass</span> <span class="o">=</span> <span class="n">HistFill</span> <span class="p">(</span><span class="s1">&#39;h_Mll&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;Mll&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span>
-                      <span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+                      <span class="s1">&#39;predict_0&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">Alg</span> <span class="p">(</span><span class="n">h_InvMass</span><span class="p">)</span>
 
 <span class="n">h_DPhi</span> <span class="o">=</span> <span class="n">HistFill</span> <span class="p">(</span><span class="s1">&#39;h_DPhi&#39;</span><span class="p">,</span>
                    <span class="s1">&#39;DPhi&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">3.1416</span><span class="p">,</span>
-                   <span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+                   <span class="s1">&#39;predict_0&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">Alg</span> <span class="p">(</span><span class="n">h_DPhi</span><span class="p">)</span>
 
 <span class="n">h_perf</span> <span class="o">=</span> <span class="n">HistFill</span> <span class="p">(</span><span class="s1">&#39;h_perf&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span>
-                   <span class="s1">&#39;truth&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                   <span class="s1">&#39;predict_0&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span>
+                   <span class="s1">&#39;true_0&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">Alg</span> <span class="p">(</span><span class="n">h_perf</span><span class="p">)</span>
 </pre></div>
 
@@ -14556,7 +14500,7 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="ROC-topo.svg" alt="figure:ROC-topo.svg" title="ROC curve for RJ reconstruction of AA"></p>
-<p>Because the set <code>Eb_a</code> and <code>El_a</code> (or <code>Eb_b</code> and <code>El_b</code>) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 less variables and is still a good approximation of all available information with a phenomenological basis of description.</p>
+<p>Because the set <code>Eb_a</code> and <code>El_a</code> (or <code>Eb_b</code> and <code>El_b</code>) are related by swapping particles, we see that one decay topology can still be used to discriminate between the other topologies. Furthermore, this last ROC curve is almost as good as the first one, meaning that it is nearly as efficient at determining the classification. At 18 variables needed for all information contained in the raw four-vectors (and two-vector $E_\mathrm{T}^{miss}$), the RJ reconstruction has 4 fewer variables and is still a good approximation of all available information with a phenomenological basis of description.</p>
 
 </div>
 </div>
@@ -14745,58 +14689,10 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">h5py</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;SampleDir&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/Zll.h5&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;L1_pT&quot;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="s2">&quot;L1_pT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">]</span>
+<span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;L1_pT&quot;</span><span class="p">]</span>
+<span class="n">f</span><span class="p">[</span><span class="s2">&quot;AA_Gen&quot;</span><span class="p">][</span><span class="s2">&quot;L1_pT&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -14873,7 +14769,7 @@ $$<p><img src="compare-Mll.svg" alt="figure:compare-Mll.svg" title="Comparison o
 <p>Their distributions might look like this:</p>
 <p><img src="data-selection.svg" alt="alt-text" title="Data selection"></p>
 <p>In this plot, a vertical line is included as a primitive guess at one such demarcation. Events to the left of this line are rejected, and events to the right of this line are kept. Because the two distributions overlap, drawing this line at the "best" location is not a clear task because the two distributions do not have equal <em>value</em> to an analysis. Keeping signal events is valuable and rejecting background events is imperative. Therefore, a line down the middle might be too much signal loss. A line near the left side has too much background. A line near the right side has too little signal.</p>
-<p>It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive, and the rejection is called Predicted Negative.</p>
+<p>It is useful to define some measures associated with the placement of this line. We have signal events, which we will call Real Positive, and background events, which we will call Real Negative. When we draw the line, our new selection is called Predicted Positive (to the right), and the rejection is called Predicted Negative (to the left).</p>
 
 </div>
 </div>
@@ -15012,7 +14908,7 @@ $$<p>And there are certainly other statistical measures that you can find.</p>
 <p><img src="roc-curve.svg" alt="alt-text" title="ROC curve"></p>
 <p>This Receiver Operating Characteristic (ROC) curve is a standard way of expressing the ability to classify two types of data: a signal and a background. It presents a dilemma: gaining signal events by contaminating them with background. This curve follows the "sweeping" motion of the vertical line in the previous plot. When you sweep the vertical line across the previous plot from left to right, you are actually following this curve from right to left. The cross-hairs on this plot correspond to the location of the vertical line shown in the previous plot. Therefore, you can see that perhaps the best way to classify the data is not to cleave the two distributions right down the middle. Maybe you can live with a lower signal acceptance because you know you need a much lower background acceptance.</p>
 <p>The shaded gray region under the diagonal is an area you hope to avoid. If the curve crosses the diagonal, it would mean that the selection is biased toward background acceptance rather than signal acceptance. This likely represents a confused DNN because it should default to 50% when it is uncertain. The DNN has probably used a primitive feature that works well overall, but it is still in the process of learning the best features. If you encounter this, something as simple as increasing the number of epochs may resolve the issue.</p>
-<p><strong>Note:</strong> The results of the DNN output a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the <a href="#Classification-Task">previous</a> section should be considered.</p>
+<p><strong>Note:</strong> The results of the DNN outputs a ROC curve that is labeled with an Area Under Curve (AUC) measure. This should only be thought of as an indicator of how well the DNN was able to distinguish between the signal and background. It does not necessarily tell you that the ROC curve with the highest AUC gives you the best result. Instead, maybe it disguises an undesirable feature such as DNN confusion. Or it could be manifested as a slant toward good signal acceptance only for high background acceptance. Or, a low acceptance for both could mean that your analysis will be shrouded in statistical uncertainty. For a rigorous study, the measures listed in the <a href="#Classification-Task">previous</a> section should be considered.</p>
 
 </div>
 </div>
